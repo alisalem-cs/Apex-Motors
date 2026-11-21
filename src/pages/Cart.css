@@ -426,3 +426,23 @@
     border-color: #ff3333;
     color: #ff3333;
 }
+
+/* Small phones: put the trash + quantity buttons on their own line
+   under the car details, so the details are not squeezed */
+@media (max-width: 500px) {
+    .cart-item {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .cart-item-info {
+        min-width: 0;
+    }
+
+    .cart-item-right {
+        flex-basis: 100%;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

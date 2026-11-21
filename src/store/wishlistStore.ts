@@ -10,6 +10,7 @@ const listeners = new Set<() => void>();
 // Save the new wishlist and tell the pages to re-render
 function update(newWishlist: Car[]) {
   wishlist = newWishlist;
+  // converts js to json and saves it to local storage
   localStorage.setItem('wishlist', JSON.stringify(wishlist));
   listeners.forEach((listener) => listener());
 }
