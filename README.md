@@ -72,7 +72,7 @@ npm run dev
 
 | Developer | Responsibilities |
 |-----------|------------------|
-| 👨‍💻 Ali Salem | _Add responsibilities_ |
+| 👨‍💻 Ali Salem | 🚗 Homepage & Shared Layout · 🧭 Routing & Navigation · 🔗 Team Integration · 🤝 Git/GitHub Collaboration · 🧪 Application Testing |
 | 👨‍💻 Mohammad Al Hanafi | 🔍 Product Search · 🏷️ Category & Condition Filters · ↕️ Product Sorting · 🚘 Car Cards · 📋 Product Details |
 | 👨‍💻 **Mohannad Kaddoura** | 🛒 Cart, ❤️ Wishlist, 💳 Checkout |
 
