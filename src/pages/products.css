@@ -1,0 +1,249 @@
+
+/* ================================
+   Global Reset
+================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* ================================
+   Products Page
+================================ */
+
+.products-page {
+  min-height: 100vh;
+  width: 100%;
+  padding: 0 0 60px;
+  background: #101010;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ================================
+   Hero Section
+================================ */
+
+.products-hero {
+  min-height: 550px;
+  width: 100%;
+  max-width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  padding: 40px 20px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0.75)
+    ),
+    url("../assets/images/apex-hero.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Hero Title */
+
+.Title-H1 {
+  color: #fff;
+  text-align: center;
+  font-size: clamp(35px, 5vw, 60px);
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin: 0 0 15px;
+
+  animation: heroTitle 1s ease both;
+}
+
+/* Hero Subtitle */
+
+.products-hero p {
+  color: #c82b2b;
+  font-size: 18px;
+  letter-spacing: 2px;
+  margin: 10px 0;
+  
+  /* Animation setup */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  
+  /* Smooth transitions for hover interactions */
+  transition: color 0.3s ease, letter-spacing 0.3s ease;
+}
+
+/* Keyframe animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+    letter-spacing: 8px;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 2px;
+  }
+}
+
+/* Optional hover effect */
+.products-hero p:hover {
+  color: #a01f1f;
+  letter-spacing: 3px;
+}
+
+/* Staggered animation for multiple p elements */
+.products-hero p:nth-child(1) { animation-delay: 0.1s; }
+.products-hero p:nth-child(2) { animation-delay: 0.2s; }
+.products-hero p:nth-child(3) { animation-delay: 0.3s; }
+.products-hero p:nth-child(4) { animation-delay: 0.4s; }
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================================
+   Products Container
+================================ */
+
+.products-container {
+  width: min(1400px, 92%);
+  margin: 0 auto;
+  padding: 40px 0 60px;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+
+  align-items: stretch;
+}
+
+/* ================================
+   Hero Animation
+================================ */
+
+@keyframes heroTitle {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================================
+   Medium Screens
+================================ */
+
+@media (max-width: 950px) {
+  .products-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+/* ================================
+   Mobile Screens
+================================ */
+
+@media (max-width: 600px) {
+  .products-hero {
+    min-height: 420px;
+    padding: 30px 15px;
+  }
+
+  .Title-H1 {
+    font-size: 28px;
+    letter-spacing: 1px;
+  }
+
+  .products-hero p {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  .products-container {
+    grid-template-columns: 1fr;
+    width: 90%;
+    gap: 22px;
+    padding-top: 30px;
+  }
+}
+
+
+
+/* Search, Sort & Filter Controls */
+
+/* Search, Sort & Filter Controls */
+
+
+.products-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 30px auto;
+}
+
+
+.products-controls .product-search {
+  flex: 2;
+  width: 0;
+  min-width: 0;
+  margin: 0;
+}
+
+.products-controls .product-sort,
+.products-controls .product-filter {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+}
+
+.products-controls .product-filter select {
+  width: 100%;
+  height: 55px;
+}
+
+@media (max-width: 600px) {
+  .products-controls {
+    flex-wrap: wrap;
+  }
+}
+
+
+
+
