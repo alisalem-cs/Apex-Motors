@@ -6,15 +6,35 @@ import type { Order } from '../types';
 
 const DELIVERY_FEE = 500;
 
+// Country codes the user can pick, with an example local number for the placeholder
+const COUNTRY_CODES = [
+    { code: '+961', country: 'Lebanon', example: '70123456' },
+    { code: '+971', country: 'UAE', example: '501234567' },
+    { code: '+966', country: 'Saudi Arabia', example: '512345678' },
+    { code: '+974', country: 'Qatar', example: '33123456' },
+    { code: '+965', country: 'Kuwait', example: '50012345' },
+    { code: '+962', country: 'Jordan', example: '791234567' },
+    { code: '+20', country: 'Egypt', example: '1001234567' },
+    { code: '+90', country: 'Turkey', example: '5321234567' },
+    { code: '+33', country: 'France', example: '612345678' },
+    { code: '+49', country: 'Germany', example: '15123456789' },
+    { code: '+44', country: 'UK', example: '7400123456' },
+    { code: '+1', country: 'USA / Canada', example: '2015550123' },
+];
+
 // Zod rules for the checkout form
 const checkoutSchema = z.object({
     fullName: z.string().trim().min(3, 'Full name must be at least 3 characters'),
     email: z.string().trim().email('Enter a valid email'),
-    phone: z.string().trim().regex(/^\+?[0-9]{8,15}$/, 'Enter a valid phone number (8 to 15 digits)'),
+    countryCode: z.string().min(1, 'Select a country code'),
+    phone: z.string().trim().regex(/^[0-9]{6,12}$/, 'Enter a valid phone number (6 to 12 digits, no country code)'),
     address: z.string().trim().min(5, 'Address must be at least 5 characters'),
     city: z.string().trim().min(2, 'Enter your city'),
     cardNumber: z.string().regex(/^[0-9]{16}$/, 'Card number must be 16 digits'),
-    expiry: z.string().regex(/^(0[1-9]|1[0-2])\/[0-9]{2}$/, 'Use MM/YY format'),
+    expiry: z
+        .string()
+        .regex(/^(0[1-9]|1[0-2])\/[0-9]{2}$/, 'Use MM/YY format (e.g. 04/27)')
+        .refine((value) => Number(value.slice(3)) >= 26, 'Expiry year must be 2026 or later'),
     cvv: z.string().regex(/^[0-9]{3}$/, 'CVV must be 3 digits'),
 });
 
@@ -24,6 +44,7 @@ type CheckoutFormData = z.infer<typeof checkoutSchema>;
 const emptyForm: CheckoutFormData = {
     fullName: '',
     email: '',
+    countryCode: '+961',
     phone: '',
     address: '',
     city: '',
@@ -45,8 +66,22 @@ export default function Checkout() {
     const total = subtotal - discount + delivery;
 
     // Update one field as the user types
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        setForm({ ...form, [e.target.name]: e.target.value });
+    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+        const { name } = e.target;
+        let value = e.target.value;
+
+        // Expiry: keep only 4 digits and add the "/" automatically (0427 -> 04/27)
+        if (name === 'expiry') {
+            const digits = value.replace(/\D/g, '').slice(0, 4);
+            value = digits.length > 2 ? digits.slice(0, 2) + '/' + digits.slice(2) : digits;
+        }
+
+        // Phone: digits only
+        if (name === 'phone') {
+            value = value.replace(/\D/g, '');
+        }
+
+        setForm({ ...form, [name]: value });
     }
 
     function handleSubmit(e: React.FormEvent) {
@@ -74,7 +109,7 @@ export default function Checkout() {
             customer: {
                 fullName: result.data.fullName,
                 email: result.data.email,
-                phone: result.data.phone,
+                phone: result.data.countryCode + ' ' + result.data.phone,
                 address: result.data.address + ', ' + result.data.city,
             },
             createdAt: new Date().toISOString(),
@@ -84,7 +119,7 @@ export default function Checkout() {
     }
 
     // Small helper to draw one input with its error message
-    function field(name: keyof CheckoutFormData, label: string, placeholder: string) {
+    function field(name: keyof CheckoutFormData, label: string, placeholder: string, maxLength?: number) {
         return (
             <div className="checkout-field">
                 <label htmlFor={name}>{label}</label>
@@ -94,6 +129,7 @@ export default function Checkout() {
                     value={form[name]}
                     onChange={handleChange}
                     placeholder={placeholder}
+                    maxLength={maxLength}
                     className={errors[name] ? 'input-error' : ''}
                 />
                 {errors[name] && <p className="checkout-error">{errors[name]}</p>}
@@ -106,11 +142,38 @@ export default function Checkout() {
         return (
             <div className="checkout">
                 <div className="checkout-success">
-                    <h1>Thank you for your order!</h1>
-                    <p>Your order number is <strong>{order.id}</strong>.</p>
-                    <p>Total: <strong>${order.total.toLocaleString()}</strong></p>
-                    
-                    <a href="/" className="checkout-btn">Back to Home</a>
+                    <div className="success-icon">✓</div>
+                    <h1>Order Confirmed</h1>
+                    <p className="success-intro">
+                        Thank you, {order.customer.fullName.split(' ')[0]}. Your order has been placed successfully.
+                        A confirmation has been sent to <strong>{order.customer.email}</strong>.
+                    </p>
+
+                    <div className="success-details">
+                        <div className="summary-row">
+                            <span>Order Number</span>
+                            <strong>{order.id}</strong>
+                        </div>
+                        <div className="summary-row">
+                            <span>Order Date</span>
+                            <strong>{new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</strong>
+                        </div>
+                        <div className="summary-row">
+                            <span>Delivery Address</span>
+                            <strong>{order.customer.address}</strong>
+                        </div>
+                        <div className="summary-row summary-total">
+                            <span>Total Paid</span>
+                            <strong>${order.total.toLocaleString()}</strong>
+                        </div>
+                    </div>
+
+                    <p className="success-note">
+                        A member of our sales team will contact you at <strong>{order.customer.phone}</strong> within
+                        24 hours to confirm your order and arrange delivery. Please keep your order number for reference.
+                    </p>
+
+                    <a href="/" className="checkout-btn">Continue Shopping</a>
                 </div>
             </div>
         );
@@ -141,15 +204,46 @@ export default function Checkout() {
                     <h2>Shipping Details</h2>
                     {field('fullName', 'Full Name', 'John Smith')}
                     {field('email', 'Email', 'john@example.com')}
-                    {field('phone', 'Phone', '+96170123456')}
+                    <div className="checkout-field">
+                        <label htmlFor="phone">Phone</label>
+                        <div className="phone-row">
+                            <select
+                                name="countryCode"
+                                aria-label="Country code"
+                                value={form.countryCode}
+                                onChange={handleChange}
+                                className={errors.countryCode ? 'input-error' : ''}
+                            >
+                                {COUNTRY_CODES.map((c) => (
+                                    <option key={c.code} value={c.code}>
+                                        {c.country} ({c.code})
+                                    </option>
+                                ))}
+                            </select>
+                            <input
+                                id="phone"
+                                name="phone"
+                                type="tel"
+                                inputMode="numeric"
+                                value={form.phone}
+                                onChange={handleChange}
+                                placeholder={COUNTRY_CODES.find((c) => c.code === form.countryCode)?.example ?? 'Phone number'}
+                                maxLength={12}
+                                className={errors.phone ? 'input-error' : ''}
+                            />
+                        </div>
+                        {(errors.countryCode || errors.phone) && (
+                            <p className="checkout-error">{errors.countryCode || errors.phone}</p>
+                        )}
+                    </div>
                     {field('address', 'Address', 'Street, building, floor')}
                     {field('city', 'City', 'Beirut')}
 
                     <h2>Payment</h2>
-                    {field('cardNumber', 'Card Number', '4242424242424242')}
+                    {field('cardNumber', 'Card Number', '4242424242424242', 16)}
                     <div className="checkout-row">
-                        {field('expiry', 'Expiry', 'MM/YY')}
-                        {field('cvv', 'CVV', '123')}
+                        {field('expiry', 'Expiry', 'MM/YY', 5)}
+                        {field('cvv', 'CVV', '123', 3)}
                     </div>
 
                     <button type="submit" className="checkout-btn">Place Order</button>

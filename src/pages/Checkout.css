@@ -92,7 +92,8 @@
     font-weight: 600;
 }
 
-.checkout-field input {
+.checkout-field input,
+.checkout-field select {
     width: 100%;
     padding: 12px 18px;
     border: 1px solid transparent;
@@ -103,12 +104,14 @@
     font-family: inherit;
 }
 
-.checkout-field input:focus {
+.checkout-field input:focus,
+.checkout-field select:focus {
     outline: none;
     border-color: #000;
 }
 
-.checkout-field input.input-error {
+.checkout-field input.input-error,
+.checkout-field select.input-error {
     border-color: #ff3333;
 }
 
@@ -116,6 +119,24 @@
     margin: 6px 0 0 12px;
     font-size: 13px;
     color: #ff3333;
+}
+
+/* Phone: country code dropdown + number */
+.phone-row {
+    display: flex;
+    gap: 8px;
+}
+
+.phone-row select {
+    width: auto;
+    flex: 0 0 auto;
+    max-width: 45%;
+    cursor: pointer;
+}
+
+.phone-row input {
+    flex: 1;
+    min-width: 0;
 }
 
 .checkout-row {
@@ -215,6 +236,40 @@
 
 .checkout-success p {
     color: #555;
+    line-height: 1.6;
+}
+
+.checkout-success h1 {
+    margin: 12px 0 8px;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.success-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: #000;
+    color: #fff;
+    font-size: 28px;
+    line-height: 56px;
+}
+
+.success-details {
+    margin: 24px 0;
+    padding: 16px 20px;
+    border: 1px solid #e5e5e5;
+    border-radius: 14px;
+    text-align: left;
+}
+
+.success-details .summary-row strong {
+    text-align: right;
+}
+
+.success-note {
+    font-size: 14px;
 }
 
 /* Tablets and phones: summary goes on top of the form */

@@ -43,6 +43,7 @@ export function clearWishlist() {
 }
 
 // Use this in any page: const wishlist = useWishlist();
+//allow React components to access the wishlist and automatically update when the wishlist changes or updates.
 export function useWishlist() {
   return useSyncExternalStore(
     (listener) => {
