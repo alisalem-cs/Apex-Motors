@@ -73,7 +73,7 @@ npm run dev
 | Developer | Responsibilities |
 |-----------|------------------|
 | 👨‍💻 Ali Salem | _Add responsibilities_ |
-| 👨‍💻 Mohammad Al Hanafi | _Add responsibilities_ |
+| 👨‍💻 Mohammad Al Hanafi | 🔍 Product Search · 🏷️ Category & Condition Filters · ↕️ Product Sorting · 🚘 Car Cards · 📋 Product Details |
 | 👨‍💻 **Mohannad Kaddoura** | 🛒 Cart, ❤️ Wishlist, 💳 Checkout |
 
 ---
