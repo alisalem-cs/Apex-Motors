@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 
-const categories = [
+const Featured = [
   "Sports",
   "Supercar",
   "Luxury",
   "SUV",
   "Electric",
+  "Hypercar",
 ];
 
 export default function Home() {
@@ -45,45 +46,28 @@ export default function Home() {
       </section>
 
       {/* FEATURED */}
-      <section className="featured-section">
-        <div className="section-heading">
-          <div>
-            <p>CURATED FOR YOU</p>
-            <h2>Featured Collection</h2>
-          </div>
-
-          <Link to="/products" className="section-link">
-            View All Cars ↗
-          </Link>
-        </div>
-
-    
-
-        <div className="view-all">
-          <Link to="/products">Explore All Vehicles ↗</Link>
-        </div>
-      </section>
+      
 
       {/* CATEGORIES */}
       <section className="categories-section">
         <div className="section-heading">
           <div>
             <p>FIND YOUR DRIVE</p>
-            <h2>Explore Categories</h2>
+            <h2>Featured Collection</h2>
           </div>
         </div>
 
         <div className="category-grid">
-          {categories.map((category) => (
+          {Featured.map((featured) => (
             <Link
-              key={category}
-              to={`/products?category=${encodeURIComponent(category)}`}
-              className={`category-card category-${category.toLowerCase()}`}
+              key={featured}
+              to={`/products?category=${encodeURIComponent(featured)}`}
+              className={`category-card category-${featured.toLowerCase()}`}
             >
               <div className="category-overlay"></div>
 
               <div className="category-content">
-                <h3>{category}</h3>
+                <h3>{featured}</h3>
                 <span>Explore Collection ↗</span>
               </div>
             </Link>
