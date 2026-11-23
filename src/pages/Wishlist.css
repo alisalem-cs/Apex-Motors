@@ -10,7 +10,6 @@
     box-sizing: border-box;
 }
 
-/* Keep sizes predictable and ignore the global dark theme */
 .wishlist * {
     box-sizing: border-box;
 }
@@ -42,7 +41,6 @@
     margin: 0 0 24px;
 }
 
-/* Toolbar: count + clear button */
 .wishlist-toolbar {
     display: flex;
     justify-content: space-between;
@@ -78,7 +76,6 @@
     color: #fff;
 }
 
-/* Empty state */
 .wishlist-empty {
     padding: 48px 16px;
     border: 1px dashed #ddd;
@@ -105,7 +102,6 @@
     background: #333;
 }
 
-/* Cards grid: as many 260px columns as fit */
 .wishlist-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -180,7 +176,6 @@
     }
 }
 
-/* Header: title + cart button */
 .wishlist-header {
     display: flex;
     justify-content: space-between;

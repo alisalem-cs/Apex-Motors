@@ -1,11 +1,15 @@
+import { Route, Routes } from 'react-router-dom';
 import Cart from './pages/Cart';
 import Wishlist from './pages/Wishlist';
 import Checkout from './pages/Checkout';
 
 export default function App() {
-  const path = window.location.pathname;
+  return (
+    <Routes>
+      <Route path="/wishlist" element={<Wishlist />} />
+      <Route path="/checkout" element={<Checkout />} />
 
-  if (path === '/wishlist') return <Wishlist />;
-  if (path === '/checkout') return <Checkout />;
-  return <Cart />;
+      <Route path="*" element={<Cart />} />
+    </Routes>
+  );
 }

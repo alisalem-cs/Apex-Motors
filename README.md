@@ -1,75 +1,71 @@
-# React + TypeScript + Vite
+# Apex Motors – Beginner Version
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple car shop built with **React + TypeScript + Vite**.
+Same pages and features as the original project, written with only basic React
+(useState, useEffect, props and one Context) and lots of comments.
+The checkout form is checked with **Zod**.
 
-Currently, two official plugins are available:
+## How to run it
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install     # only the first time, downloads the packages
+npm run dev     # starts the site, open the link it prints (usually http://localhost:5173)
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Pages
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Address     | File                     | What it does                                   |
+|-------------|--------------------------|------------------------------------------------|
+| `/cart` (and any other address) | `src/pages/Cart.tsx` | Cart, price summary, promo code, featured cars |
+| `/wishlist` | `src/pages/Wishlist.tsx` | Saved cars, move to cart, remove               |
+| `/checkout` | `src/pages/Checkout.tsx` | Shipping + payment form, order confirmation    |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Promo code to test: **APEX20** (20% off).
+
+## Folder structure
+
+Same folders and file names as the main Apex-Motors project:
 
 ```
+src/
+  main.tsx                Starts the app and wraps it with the router + ShopProvider
+  App.tsx                 Which page to show for each address
+  App.css / index.css     Global styles
+  assets/                 Images and icons
+  types/index.ts          The shape of our data (Car, CartItem, Order)
+  data/products.ts        The list of cars + delivery fee + promo code
+  store/ShopContext.tsx   Cart, wishlist and discount, shared with every page
+  components/
+    CarCard.tsx           One car with "Add to Cart" (animated) / "Wishlist" buttons
+    PriceSummary.tsx      Subtotal / Discount / Delivery / Total rows (extra, beginner version only)
+    Navbar.tsx            Not built yet
+    Footer.tsx            Not built yet
+  pages/
+    Cart.tsx + Cart.css
+    Wishlist.tsx + Wishlist.css
+    Checkout.tsx + Checkout.css
+    Products.tsx          Not built yet
+```
+
+## How the data flows
+
+1. `ShopContext.tsx` keeps the **cart** and **wishlist** in `useState`.
+2. A `useEffect` saves them to `localStorage` whenever they change,
+   so they are still there after a refresh.
+3. Any page gets what it needs with one line:
+   ```tsx
+   const { cart, addToCart } = useShop();
+   ```
+4. When a page changes the cart (e.g. `addToCart(car)`), React re-draws
+   every page that uses it automatically.
+
+## What changed from the original
+
+| Original                                   | Beginner version                         |
+|--------------------------------------------|------------------------------------------|
+| Two custom stores with `useSyncExternalStore` | One `ShopContext` with `useState`       |
+| Zod rules written straight in the submit handler | Zod rules at the top + a small `validate()` helper, with comments |
+| `performance` API to reset the promo on refresh | Promo kept in state, so a refresh resets it naturally |
+| `<a href>` links (reload the page)         | React Router `<Link>` (no reload)        |
+| Car list inside `Cart.tsx`                 | Car list in `src/data/products.ts`       |
+| Price math repeated in Cart and Checkout   | Calculated once in the context, shown by `PriceSummary` |

@@ -16,7 +16,6 @@
     color: #000;
 }
 
-/* Keep sizes predictable and ignore the global dark theme */
 .cart * {
     box-sizing: border-box;
 }
@@ -27,7 +26,6 @@
     font-family: inherit;
 }
 
-/* Breadcrumb */
 .cart-breadcrumb {
     font-size: 14px;
     color: #666;
@@ -38,7 +36,6 @@
     color: #000;
 }
 
-/* Big title */
 .cart-title {
     font-size: 40px;
     font-weight: 800;
@@ -46,7 +43,6 @@
     margin: 0 0 24px;
 }
 
-/* Test buttons (remove later) */
 .cart-test-buttons {
     display: flex;
     gap: 8px;
@@ -61,7 +57,6 @@
     cursor: pointer;
 }
 
-/* Two columns: items + summary */
 .cart-layout {
     display: flex;
     gap: 20px;
@@ -80,7 +75,6 @@
     color: #777;
 }
 
-/* One car row */
 .cart-item {
     display: flex;
     gap: 16px;
@@ -138,7 +132,6 @@
     padding: 0;
 }
 
-/* Quantity pill */
 .cart-qty {
     display: flex;
     align-items: center;
@@ -157,7 +150,6 @@
     line-height: 1;
 }
 
-/* Order summary */
 .cart-summary {
     flex: 1;
     border: 1px solid #e5e5e5;
@@ -196,7 +188,6 @@
     font-size: 22px;
 }
 
-/* Promo code */
 .promo {
     display: flex;
     gap: 12px;
@@ -228,7 +219,6 @@
     color: #666;
 }
 
-/* Checkout button */
 .checkout-btn {
     display: block;
     width: 100%;
@@ -248,7 +238,6 @@
     background: #333;
 }
 
-/* Tablets and phones: summary goes under the items */
 @media (max-width: 900px) {
     .cart-layout {
         flex-direction: column;
@@ -261,7 +250,6 @@
     }
 }
 
-/* Small phones */
 @media (max-width: 500px) {
     .cart-title {
         font-size: 30px;
@@ -286,14 +274,13 @@
     }
 }
 .promo-success {
-    color: #2e7d32;   /* green */
+    color: #2e7d32;
 }
 
 .promo-error {
-    color: #ff3333;   /* red */
+    color: #ff3333;
 }
 
-/* Header: title + wishlist button */
 .cart-header {
     display: flex;
     justify-content: space-between;
@@ -322,7 +309,6 @@
     color: #fff !important;
 }
 
-/* Clear button (under promo code) */
 .cart .clear-btn {
     display: block;
     width: 100%;
@@ -345,7 +331,6 @@
     cursor: not-allowed;
 }
 
-/* Featured cars */
 .cars-title {
     margin: 40px 0 16px;
     font-size: 28px;
@@ -427,8 +412,6 @@
     color: #ff3333;
 }
 
-/* Small phones: put the trash + quantity buttons on their own line
-   under the car details, so the details are not squeezed */
 @media (max-width: 500px) {
     .cart-item {
         flex-wrap: wrap;
@@ -445,4 +428,15 @@
         justify-content: space-between;
         align-items: center;
     }
+}
+
+.cart .car-cart-btn.added {
+    background: #1a9e4b;
+    animation: cart-pop 0.4s ease;
+}
+
+@keyframes cart-pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.08); }
+    100% { transform: scale(1); }
 }

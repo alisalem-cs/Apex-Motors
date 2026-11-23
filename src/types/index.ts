@@ -1,35 +1,29 @@
 export interface Car {
-    id: string;
-    brand: string;
-    model: string;
-    year: number;
-    price: number;
-    image: string;
-    description: string;
-    category: string;
-    mileage: number;
-    fuelType: string;
-    transmission: string;
-    horsepower: number;
-    featured: boolean;
+  id: string;
+  brand: string;
+  model: string;
+  year: number;
+  price: number;
+  image: string;
+  description: string;
+  category: string;
+  mileage: number;
+  fuelType: string;
+  transmission: string;
+  horsepower: number;
 }
 
 export interface CartItem {
-    car: Car;
-    quantity: number;
-}
-
-export interface CheckoutForm {
-    fullName: string;
-    email: string;
-    phone: string;
-    address: string;
+  car: Car;
+  quantity: number;
 }
 
 export interface Order {
-    id: string;
-    items: CartItem[];
-    total: number;
-    customer: CheckoutForm;
-    createdAt: string;
+  id: string;
+  total: number;
+  fullName: string;
+  email: string;
+  phone: string;
+  address: string;
+  date: string;
 }
