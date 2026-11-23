@@ -2,14 +2,25 @@ import type { CarProduct } from "../types";
 import { useNavigate } from "react-router-dom";
 import "./CarCard.css";
 import { useState } from "react";
+import { useShop } from "../store/ShopContext";
 interface CarCardProps {
     car: CarProduct;
 };
 
 function CarCard({ car }: CarCardProps) {
 
-    const [isWishlisted, setIsWishlisted] = useState(false);
     const navigate = useNavigate();
+    const { addToCart, toggleWishlist, isInWishlist } = useShop();
+    const isWishlisted = isInWishlist(car.id);
+
+    const [justAdded, setJustAdded] = useState(false);
+
+    function handleAddToCart() {
+        addToCart(car);
+        setJustAdded(true);
+
+        setTimeout(() => setJustAdded(false), 1000);
+    }
 
 return (
   <div className="car-card">
@@ -18,7 +29,7 @@ return (
     <div className="car-info">
       <h2 className="car-name">{car.name}</h2>
 
-      <p className="car-price">Price: ${car.price}</p>
+      <p className="car-price">${car.price.toLocaleString("en-US")}</p>
 
       <div className="car-details">
   <p>Year: {car.year}</p>
@@ -38,9 +49,17 @@ return (
   See Details
 </button>
 
+        <button
+  className={justAdded ? "add-to-cart-button added" : "add-to-cart-button"}
+  onClick={handleAddToCart}
+  aria-label={"Add " + car.name + " to cart"}
+>
+  {justAdded ? "✓ Added" : "Add to Cart"}
+</button>
+
      <button
-  className="add-to-wishlist-button"
-  onClick={() => setIsWishlisted((prev) => !prev)}
+  className={isWishlisted ? "add-to-wishlist-button wishlisted" : "add-to-wishlist-button"}
+  onClick={() => toggleWishlist(car)}
 >
   <span className="wishlist-heart">
     {isWishlisted ? "♥" : "♡"}

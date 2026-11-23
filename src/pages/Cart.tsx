@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useShop } from '../store/ShopContext';
-import { PROMO_CODE, PROMO_PERCENT } from '../data/products';
+import { PROMO_CODE, PROMO_PERCENT } from '../data/shop';
 import PriceSummary from '../components/PriceSummary';
 import './Shop.css';
 

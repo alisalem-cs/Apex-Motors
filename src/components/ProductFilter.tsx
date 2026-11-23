@@ -36,6 +36,8 @@ function ProductFilter({
         <option value="luxury">Luxury</option>
         <option value="suv">SUV</option>
         <option value="sports">Sports</option>
+        <option value="supercar">Supercar</option>
+        <option value="electric">Electric</option>
         <option value="pickup">Pickup</option>
         <option value="hypercar">Hypercar</option>
       </select>

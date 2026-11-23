@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { CarProduct, CartItem } from '../types';
-import { DELIVERY_FEE } from '../data/products';
+import { DELIVERY_FEE } from '../data/shop';
 import { ShopContext } from './ShopContext';
 import type { ShopContextValue } from './ShopContext';
 

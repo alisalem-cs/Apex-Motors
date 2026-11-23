@@ -2,13 +2,15 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { products } from "../data/products";
-import { addToCart } from "../store/cartStore";
+import { useShop } from "../store/ShopContext";
 
 import "./ProductDetails.css";
 
 function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const { addToCart } = useShop();
 
   const [isAdded, setIsAdded] = useState(false);
 
@@ -97,7 +99,10 @@ function ProductDetails() {
 
             <button
               className="details-buy-button"
-              onClick={() => navigate("/checkout")}
+              onClick={() => {
+                addToCart(car);
+                navigate("/checkout");
+              }}
             >
               Buy Now
             </button>

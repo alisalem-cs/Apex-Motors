@@ -1,17 +1,28 @@
 
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { products } from "../data/products";
 import CarCard from "../components/CarCard";
 import ProductSearch from "../components/ProductSearch";
 import ProductSort from "../components/ProductSort";
 import ProductFilter from "../components/ProductFilter";
-import "./Products.css";
+import "./products.css";
 
 function CarProducts() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("default");
   const [filterCondition, setFilterCondition] = useState("all");
-  const [filterCategory, setFilterCategory] = useState("all");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const filterCategory = (searchParams.get("category") || "all").toLowerCase();
+
+  function handleCategoryChange(value: string) {
+    if (value === "all") {
+      setSearchParams({});
+    } else {
+      setSearchParams({ category: value });
+    }
+  }
 
   // Filter products by search, condition, and category
   const filteredProducts = products.filter((car) => {
@@ -74,7 +85,7 @@ function CarProducts() {
           filterCondition={filterCondition}
           onFilterChange={setFilterCondition}
           filterCategory={filterCategory}
-          onCategoryChange={setFilterCategory}
+          onCategoryChange={handleCategoryChange}
         />
       </div>
 

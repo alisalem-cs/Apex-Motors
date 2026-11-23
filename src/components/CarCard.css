@@ -168,7 +168,7 @@
   transform: translateX(6px);
 }
 
-.car-price {
+.car-card .car-price {
   display: inline-block;
   margin: 0 0 20px;
   color: #fff;
@@ -329,4 +329,49 @@
   .car-card { opacity: 1 !important; transform: none !important; }
   .car-card::after,
   .car-buttons button::before { display: none; }
+}
+
+.car-buttons {
+  flex-wrap: wrap;
+}
+
+.car-buttons .add-to-cart-button {
+  color: #fff;
+}
+
+.car-buttons .add-to-cart-button.added {
+  background: #1a9e4b;
+  box-shadow: none;
+  animation: cart-pop 0.4s ease;
+}
+
+.car-buttons .add-to-cart-button.added::before {
+  transform: translateX(-101%);
+}
+
+.car-buttons .add-to-wishlist-button {
+  flex: 1 1 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: #c3c8cf;
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.car-buttons .add-to-wishlist-button::before {
+  background: rgba(232, 0, 13, 0.25);
+}
+
+.car-buttons .add-to-wishlist-button.wishlisted {
+  color: #fff;
+  background: rgba(232, 0, 13, 0.18);
+  box-shadow: inset 0 0 0 2px var(--red);
+}
+
+@keyframes cart-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.08); }
+  100% { transform: scale(1); }
 }
