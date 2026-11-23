@@ -16,7 +16,7 @@ Apex Motors lets users browse cars, save their favorites, add them to a cart, an
 - 💳 **Checkout**: Simple checkout form with an order summary
 - 🧭 **Navigation**: Navbar and footer shared across all pages
 - 📱 **Responsive Design**: Looks great on desktop, tablet, and mobile
-- 💾 **State Management**: Dedicated stores for the cart (`cartStore`) and wishlist (`wishlistStore`)
+- 💾 State Management: Cart, wishlist and prices are shared across the app using React Context (ShopContext + ShopProvider), and saved in localStorage so they survive a page refresh
 
 ---
 
@@ -39,7 +39,7 @@ src/
 ├── 📄 App.tsx           # Routes & layout
 ├── 📂 components/       # Navbar, Footer, reusable UI
 ├── 📂 pages/            # Home, Catalog, Cart, Wishlist, Checkout
-├── 📂 store/            # cartStore, wishlistStore
+├── 📂 store/            # ShopContext.ts, ShopProvider.tsx.
 ├── 📂 types/            # Shared TypeScript types
 └── 🎨 index.css         # Global styles
 ```
