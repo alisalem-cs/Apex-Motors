@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow:wght@400;500;600;700&display=swap');
+
+/* =========================================================
+   APEX_MOTOR — Product Search (REDLINE design)
+   Safe to use with the main stylesheet or on its own.
+   ========================================================= */
+
+@property --a {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+:root {
+  --red: #e8000d;
+  --red-dark: #8f0008;
+  --red-light: #ff2d3a;
+  --red-glow: rgba(232, 0, 13, 0.55);
+  --ease: cubic-bezier(0.2, 0.9, 0.3, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+}
+
+/* =========================================================
+   SEARCH BAR — cut-corner frame, rotating neon border on focus
+   ========================================================= */
+.product-search {
+  --cut: 18px;
+  position: relative;
+  isolation: isolate;
+  flex: 1;
+  max-width: 500px;
+  height: 65px;
+  margin: 0;
+  padding: 0 20px 0 22px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  background: linear-gradient(160deg, rgba(255, 255, 255, .22), rgba(255, 255, 255, .05) 45%, rgba(255, 255, 255, .14));
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+  transition: background 0.4s var(--ease);
+}
+
+/* inner dark surface (leaves a 1px frame) */
+.product-search::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, .02) 0 2px, transparent 2px 6px),
+    #121217;
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+  transition: background-color 0.4s ease;
+}
+
+/* red scan line along the bottom edge */
+.product-search::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red-dark), var(--red-light), #ff9a9f);
+  box-shadow: 0 0 14px var(--red-glow);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+  pointer-events: none;
+}
+
+.product-search:hover {
+  background: linear-gradient(160deg, rgba(255, 255, 255, .4), rgba(255, 255, 255, .1) 45%, rgba(255, 255, 255, .28));
+}
+
+/* focus: rotating red border + scan line */
+.product-search:focus-within {
+  background: conic-gradient(from var(--a), var(--red-dark) 0 20%, var(--red-light) 40%, #ff9a9f 50%, var(--red-light) 60%, var(--red-dark) 80%, var(--red-dark));
+  animation: apexSearchSpin 3.5s linear infinite;
+}
+.product-search:focus-within::after {
+  transform: scaleX(1);
+}
+
+@keyframes apexSearchSpin {
+  to { --a: 360deg; }
+}
+
+/* =========================================================
+   ICON
+   ========================================================= */
+.search-icon {
+  flex-shrink: 0;
+  color: var(--red-light);
+  font-size: 27px;
+  transition: transform 0.4s var(--ease), filter 0.4s ease;
+}
+.product-search:focus-within .search-icon {
+  transform: scale(1.15) rotate(-8deg);
+  filter: drop-shadow(0 0 8px var(--red-glow));
+}
+
+/* =========================================================
+   INPUT
+   (selectors are more specific than the global input rules)
+   ========================================================= */
+.product-search input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+
+.product-search input:hover,
+.product-search input:focus {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.product-search input::placeholder {
+  color: #7c8189;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  transition: color 0.3s ease, letter-spacing 0.4s var(--ease);
+}
+.product-search input:focus::placeholder {
+  color: #4f545c;
+  letter-spacing: 4px;
+}
+
+/* =========================================================
+   CLEAR BUTTON
+   ========================================================= */
+.clear-search {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--red-light);
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+  animation: apexClearIn 0.35s var(--ease-out) both;
+  transition: transform 0.3s var(--ease), color 0.3s ease, filter 0.3s ease;
+}
+.clear-search:hover {
+  color: #fff;
+  transform: rotate(90deg) scale(1.2);
+  filter: drop-shadow(0 0 8px var(--red-glow));
+}
+.clear-search:active {
+  transform: rotate(90deg) scale(0.95);
+}
+
+@keyframes apexClearIn {
+  from { opacity: 0; transform: scale(0.4) rotate(-90deg); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 600px) {
+  .product-search {
+    --cut: 14px;
+    height: 55px;
+    max-width: 100%;
+    padding: 0 16px 0 18px;
+    gap: 12px;
+  }
+  .search-icon { font-size: 22px; }
+  .product-search input { font-size: 16px; letter-spacing: 1px; }
+  .product-search input::placeholder { letter-spacing: 2px; }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .product-search,
+  .search-icon,
+  .clear-search,
+  .product-search input::placeholder {
+    animation: none !important;
+    transition: none !important;
+  }
+  .product-search:focus-within {
+    background: linear-gradient(160deg, var(--red-light), var(--red-dark));
+  }
+}

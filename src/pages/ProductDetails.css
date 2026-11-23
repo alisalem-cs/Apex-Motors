@@ -1,0 +1,484 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow:wght@400;500;600;700&display=swap');
+
+/* =========================================================
+   APEX_MOTOR — Product Details Page (REDLINE design)
+   Safe to use with the main stylesheet or on its own.
+   ========================================================= */
+
+:root {
+  --bg: #08080a;
+  --bg-card: #121217;
+  --red: #e8000d;
+  --red-dark: #8f0008;
+  --red-light: #ff2d3a;
+  --red-glow: rgba(232, 0, 13, 0.55);
+  --text-muted: #8f959e;
+  --border: rgba(255, 255, 255, 0.08);
+  --ease: cubic-bezier(0.2, 0.9, 0.3, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  --cut: 24px;
+  --cut-shape: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+}
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+.product-details-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 70px 5% 90px;
+  color: #fff;
+  font-family: var(--font-body);
+  background:
+    radial-gradient(ellipse 60% 50% at 85% 10%, rgba(232, 0, 13, 0.14), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(232, 0, 13, 0.08), transparent 70%),
+    var(--bg);
+}
+
+.details-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+  align-items: center;
+  animation: apexDetailsEnter 0.95s var(--ease-out) both;
+}
+
+/* =========================================================
+   IMAGE — cut-corner neon frame
+   ========================================================= */
+.details-image-section {
+  --cut: 36px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(160deg, rgba(255,255,255,.18), rgba(255,255,255,.04) 40%, rgba(255,255,255,.12));
+  clip-path: var(--cut-shape);
+  transition: background 0.5s var(--ease);
+}
+
+/* inner dark surface (leaves a 1px frame) */
+.details-image-section::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  background: var(--bg-card);
+  clip-path: var(--cut-shape);
+}
+
+/* red light sweeping across the top edge */
+.details-image-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 3px;
+  z-index: 3;
+  background: linear-gradient(90deg, transparent, var(--red-light), #ff9a9f, transparent);
+  box-shadow: 0 0 16px var(--red-glow);
+  transition: left 0.9s var(--ease-out);
+  pointer-events: none;
+}
+.details-image-section:hover::after { left: 100%; }
+
+.details-image-section:hover {
+  background: linear-gradient(160deg, var(--red-light), var(--red-dark) 50%, var(--red-light));
+}
+
+.details-main-image {
+  display: block;
+  width: calc(100% - 2px);
+  height: 520px;
+  margin: 1px;
+  object-fit: cover;
+  filter: grayscale(0.3) contrast(1.05);
+  transition: transform 1s var(--ease), filter 0.6s ease;
+  will-change: transform;
+}
+.details-image-section:hover .details-main-image {
+  transform: scale(1.08);
+  filter: grayscale(0) contrast(1.1) saturate(1.2);
+}
+
+/* =========================================================
+   CONDITION BADGE — angled tag with live dot
+   ========================================================= */
+.details-condition {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 26px 9px 20px;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: linear-gradient(120deg, var(--red-dark), var(--red) 50%, var(--red-light));
+  clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+  transition: transform 0.4s var(--ease), letter-spacing 0.4s var(--ease);
+}
+.details-condition::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  animation: apexBlink 1.6s ease-in-out infinite;
+}
+.details-image-section:hover .details-condition {
+  transform: translateY(-2px);
+  letter-spacing: 4px;
+}
+
+/* =========================================================
+   TEXT CONTENT
+   ========================================================= */
+.details-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+  color: var(--red-light);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  transition: letter-spacing 0.5s var(--ease), color 0.3s ease;
+}
+.details-brand::before {
+  content: '';
+  width: 34px;
+  height: 3px;
+  background: var(--red);
+  box-shadow: 0 0 12px var(--red-glow);
+  transform-origin: left;
+  animation: apexGrow 1s var(--ease-out) 0.3s both;
+}
+.details-container:hover .details-brand {
+  letter-spacing: 7px;
+  color: #fff;
+}
+
+.details-title {
+  margin: 0 0 16px;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6vw, 92px);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+.details-price {
+  display: inline-block;
+  margin-bottom: 26px;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(40px, 4vw, 56px);
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  transition: text-shadow 0.4s ease, transform 0.45s var(--ease);
+}
+.details-price::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 14px;
+  background: var(--red);
+  box-shadow: 0 0 14px var(--red-glow);
+  transform: rotate(45deg);
+  vertical-align: middle;
+}
+.details-container:hover .details-price {
+  text-shadow: 0 0 26px var(--red-glow);
+  transform: translateX(4px);
+}
+
+.details-divider {
+  position: relative;
+  height: 1px;
+  margin-bottom: 28px;
+  background: var(--border);
+}
+.details-divider::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 110px;
+  height: 3px;
+  background: var(--red);
+  box-shadow: 0 0 14px var(--red-glow);
+  transform-origin: left;
+  animation: apexGrow 1.2s var(--ease-out) 0.4s both;
+}
+
+/* =========================================================
+   SPECIFICATIONS
+   ========================================================= */
+.specifications-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.specifications-title::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: var(--red);
+  transform: rotate(45deg);
+  box-shadow: 0 0 12px var(--red-glow);
+}
+
+.specifications-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.specification-item {
+  --cut: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 18px;
+  background:
+    linear-gradient(90deg, rgba(232, 0, 13, 0.55), rgba(232, 0, 13, 0) 3px),
+    repeating-linear-gradient(45deg, rgba(255,255,255,.02) 0 2px, transparent 2px 6px),
+    #14141a;
+  clip-path: var(--cut-shape);
+
+  /* "backwards" (not "forwards") so the hover transform still works afterwards */
+  animation: apexSpecEnter 0.7s var(--ease-out) backwards;
+  transition: transform 0.35s var(--ease), background 0.35s ease;
+}
+
+.specification-item:nth-child(1) { animation-delay: 0.25s; }
+.specification-item:nth-child(2) { animation-delay: 0.35s; }
+.specification-item:nth-child(3) { animation-delay: 0.45s; }
+.specification-item:nth-child(4) { animation-delay: 0.55s; }
+.specification-item:nth-child(5) { animation-delay: 0.65s; }
+.specification-item:nth-child(6) { animation-delay: 0.75s; }
+
+.specification-item:hover {
+  transform: translateY(-4px);
+  background:
+    linear-gradient(90deg, var(--red-light), rgba(255, 45, 58, 0) 4px),
+    linear-gradient(135deg, rgba(232, 0, 13, 0.22), rgba(232, 0, 13, 0.05)),
+    #14141a;
+}
+
+.specification-item span {
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+.specification-item:hover span { color: var(--red-light); }
+
+.specification-item strong {
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   BUTTONS — angled, slide-fill hover
+   ========================================================= */
+.details-buttons {
+  display: flex;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.details-buttons button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  flex: 1;
+  padding: 18px 14px;
+  border: none;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  clip-path: polygon(16px 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
+  transition: color 0.35s var(--ease), transform 0.35s var(--ease);
+}
+
+.details-buttons button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translateX(-101%);
+  transition: transform 0.5s var(--ease);
+}
+.details-buttons button:hover::before { transform: translateX(0); }
+.details-buttons button:hover { transform: translateY(-4px); }
+.details-buttons button:active { transform: translateY(-1px) scale(0.98); }
+
+/* primary: red, fills white */
+.details-buy-button {
+  background: linear-gradient(120deg, var(--red-dark), var(--red) 40%, var(--red-light));
+  background-size: 200% 100%;
+  animation: apexShimmer 4s linear infinite;
+}
+.details-buy-button::before { background: #fff; }
+.details-buy-button:hover { color: #0a0a0d; }
+
+/* secondary: outlined, fills red */
+.details-cart-button {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.28);
+}
+.details-cart-button::before { background: var(--red); }
+.details-cart-button:hover { color: #fff; }
+
+/* =========================================================
+   BACK LINK
+   ========================================================= */
+.back-to-products {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding: 14px 30px 14px 24px;
+  color: #d5d9de;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-decoration: none;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+  transition: color 0.35s var(--ease), transform 0.35s var(--ease);
+}
+.back-to-products::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--red);
+  transform: translateX(101%);
+  transition: transform 0.5s var(--ease);
+}
+.back-to-products:hover {
+  color: #fff;
+  transform: translateX(-4px);
+}
+.back-to-products:hover::before { transform: translateX(0); }
+
+/* =========================================================
+   KEYFRAMES
+   ========================================================= */
+@keyframes apexDetailsEnter {
+  0%   { opacity: 0; transform: translateY(50px) scale(0.97); filter: blur(8px); }
+  60%  { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: none; filter: blur(0); }
+}
+
+@keyframes apexSpecEnter {
+  from { opacity: 0; transform: translateY(28px) skewX(-4deg); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes apexGrow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes apexShimmer {
+  to { background-position: 200% 50%; }
+}
+
+@keyframes apexBlink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 850px) {
+  .details-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .details-main-image { height: 400px; }
+}
+
+@media (max-width: 500px) {
+  .product-details-page { padding: 36px 5% 60px; }
+  .details-image-section { --cut: 22px; }
+  .details-main-image { height: 260px; }
+  .details-condition { top: 16px; left: 16px; font-size: 14px; padding: 7px 20px 7px 16px; }
+  .details-title { font-size: 52px; }
+  .specifications-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .specification-item { padding: 12px 14px; }
+  .specification-item strong { font-size: 18px; }
+  .details-buttons { flex-direction: column; }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .details-container,
+  .details-main-image,
+  .specification-item,
+  .details-buttons button,
+  .details-brand,
+  .details-price,
+  .details-condition,
+  .back-to-products {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+  .details-image-section::after,
+  .details-buttons button::before,
+  .back-to-products::before { display: none; }
+}
