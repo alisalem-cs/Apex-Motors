@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow:wght@400;500;600;700&display=swap');
+
+/* =========================================================
+   APEX_MOTOR — Product Filter row (REDLINE design)
+   Same look as the sort dropdown and search bar.
+   Safe to use with the main stylesheet or on its own.
+   ========================================================= */
+
+:root {
+  --red: #e8000d;
+  --red-dark: #8f0008;
+  --red-light: #ff2d3a;
+  --red-glow: rgba(232, 0, 13, 0.55);
+  --ease: cubic-bezier(0.2, 0.9, 0.3, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+}
+
+/* =========================================================
+   ROW
+   ========================================================= */
+.product-filter {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+/* =========================================================
+   SELECTS — cut corners, red accent edge, custom arrow
+   ========================================================= */
+.product-filter select {
+  --cut: 18px;
+  flex: 1;
+  min-width: 0;
+  height: 65px;
+  padding: 0 56px 0 24px;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='10' viewBox='0 0 16 10' fill='none' stroke='%23ff2d3a' stroke-width='2.5' stroke-linecap='square'%3E%3Cpath d='M1 1l7 7 7-7'/%3E%3C/svg%3E")
+      no-repeat right 22px center,
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, .02) 0 2px, transparent 2px 6px),
+    #121217;
+
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0;
+  box-shadow: inset 3px 0 0 rgba(232, 0, 13, 0.6);
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.35s var(--ease), box-shadow 0.35s var(--ease), color 0.3s ease;
+
+  /* each select slides in one after another on load */
+  animation: apexFilterIn 0.7s var(--ease-out) backwards;
+}
+
+.product-filter select:nth-child(1) { animation-delay: 0.05s; }
+.product-filter select:nth-child(2) { animation-delay: 0.15s; }
+.product-filter select:nth-child(3) { animation-delay: 0.25s; }
+.product-filter select:nth-child(4) { animation-delay: 0.35s; }
+.product-filter select:nth-child(5) { animation-delay: 0.45s; }
+
+@keyframes apexFilterIn {
+  from { opacity: 0; transform: translateY(18px) skewX(-4deg); }
+  to   { opacity: 1; transform: none; }
+}
+
+.product-filter select:hover {
+  border-color: var(--red-light);
+  box-shadow: inset 5px 0 0 var(--red-light);
+}
+
+/* open / focused: arrow flips up, red glow edge */
+.product-filter select:focus {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='10' viewBox='0 0 16 10' fill='none' stroke='%23ff2d3a' stroke-width='2.5' stroke-linecap='square'%3E%3Cpath d='M1 9l7-7 7 7'/%3E%3C/svg%3E")
+      no-repeat right 22px center,
+    linear-gradient(90deg, rgba(232, 0, 13, 0.12), rgba(232, 0, 13, 0) 60%),
+    #15151b;
+  border-color: var(--red-light);
+  box-shadow: inset 5px 0 0 var(--red-light), inset 0 -3px 0 var(--red);
+}
+
+.product-filter select:focus-visible {
+  outline: none;
+}
+
+/* =========================================================
+   OPTIONS (styling support varies by browser)
+   ========================================================= */
+.product-filter select option {
+  background-color: #121217;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  padding: 12px 16px;
+}
+
+.product-filter select option:checked {
+  background: linear-gradient(var(--red), var(--red));
+  color: #fff;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 700px) {
+  .product-filter {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .product-filter select {
+    --cut: 14px;
+    flex: none;
+    width: 100%;
+    height: 55px;
+    padding: 0 46px 0 18px;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    background-position: right 18px center, 0 0, 0 0;
+  }
+  .product-filter select:focus {
+    background-position: right 18px center, 0 0, 0 0;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .product-filter select {
+    animation: none !important;
+    transition: none !important;
+  }
+}
