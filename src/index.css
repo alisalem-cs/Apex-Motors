@@ -334,6 +334,18 @@ body::before {
   font-weight: 800;
 }
 
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-img {
+  height: 42px;
+  width: auto;
+  filter: drop-shadow(0 0 10px rgba(232, 0, 13, 0.35));
+}
+
 .nav-links {
   display: flex;
   align-items: center;
@@ -973,7 +985,7 @@ body::before {
   --cat-img: url("https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1000&q=85");
 }
 .category-luxury {
-  --cat-img: url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=85");
+  --cat-img: url("https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Rolls-Royce_Phantom%2C_Geneva_International_Motor_Show_2018%2C_Le_Grand-Saconnex_%281X7A1220%29.jpg/1280px-Rolls-Royce_Phantom%2C_Geneva_International_Motor_Show_2018%2C_Le_Grand-Saconnex_%281X7A1220%29.jpg");
 }
 .category-suv {
   --cat-img: url("https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1000&q=85");
@@ -1025,7 +1037,6 @@ body::before {
   background: linear-gradient(
     to top,
     rgba(0, 0, 0, 0.97) 0%,
-    rgba(150, 0, 8, 0.5) 60%,
     rgba(0, 0, 0, 0.1) 100%
   );
 }
@@ -1524,6 +1535,56 @@ textarea::placeholder {
   color: #666b73;
 }
 
+/* Dropdown options: red hover instead of the system blue */
+@supports (appearance: base-select) {
+  select {
+    appearance: base-select;
+  }
+
+  select {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  select::picker-icon {
+    display: none;
+  }
+
+  ::picker(select) {
+    appearance: base-select;
+    padding: 6px 0;
+    background: #121217;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.9);
+  }
+
+  option {
+    padding: 12px 18px;
+    color: #fff;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 16px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  option::checkmark {
+    display: none;
+  }
+
+  option:checked {
+    background: var(--red-dark);
+  }
+
+  option:hover,
+  option:focus-visible {
+    background: var(--red);
+    color: #fff;
+  }
+}
+
 /* =========================================================
    UTILITY
    ========================================================= */
@@ -1788,5 +1849,39 @@ textarea::placeholder {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE FIXES
+   ========================================================= */
+.hero h1,
+.hero-title {
+  font-size: clamp(48px, 8.5vw, 140px);
+}
+
+@media (max-width: 800px) {
+  .hero h1,
+  .hero-title {
+    font-size: clamp(32px, 9.5vw, 80px);
+  }
+  .brand-content h2 {
+    font-size: clamp(34px, 9.5vw, 76px);
+  }
+  .hero-content,
+  .brand-content {
+    max-width: 100%;
+  }
+  .logo-img {
+    height: 34px;
+  }
+}
+
+@media (max-width: 380px) {
+  .logo {
+    gap: 8px;
+  }
+  .logo-img {
+    height: 28px;
   }
 }

@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { Link } from 'react-router-dom';
 import { useShop } from '../store/ShopContext';
 import PriceSummary from '../components/PriceSummary';
+import PromoCode from '../components/PromoCode';
 import type { Order } from '../types';
 import './Shop.css';
 
@@ -272,6 +273,8 @@ export default function Checkout() {
             ))}
 
             <PriceSummary />
+
+            <PromoCode />
           </aside>
         </div>
       </div>

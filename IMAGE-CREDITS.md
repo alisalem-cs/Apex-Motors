@@ -12,3 +12,4 @@ These car photos come from Wikimedia Commons and are used under their Creative C
 | Mercedes-Benz S 580 e | Alexander Migl | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Mercedes-Benz_W223_580_e_IAA_2021_1X7A0258.jpg |
 | Rivian R1T | Benjamin Hollis | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Rivian_R1T_on_Sunset_Blvd_rear.jpg |
 | Honda Accord | Gold Pony | CC BY 3.0 | https://commons.wikimedia.org/wiki/File:2023_Honda_Accord.jpg |
+| Rolls-Royce Phantom (Home: Luxury category) | Matti Blume | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Rolls-Royce_Phantom,_Geneva_International_Motor_Show_2018,_Le_Grand-Saconnex_(1X7A1220).jpg |

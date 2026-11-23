@@ -1,4 +1,4 @@
-
+import Dropdown from "./Dropdown";
 import "./ProductFilter.css";
 
 interface ProductFilterProps {
@@ -8,6 +8,24 @@ interface ProductFilterProps {
   onCategoryChange: (value: string) => void;
 }
 
+const conditionOptions = [
+  { value: "all", label: "All Conditions" },
+  { value: "new", label: "New" },
+  { value: "used", label: "Used" },
+];
+
+const categoryOptions = [
+  { value: "all", label: "All Categories" },
+  { value: "sedan", label: "Sedan" },
+  { value: "luxury", label: "Luxury" },
+  { value: "suv", label: "SUV" },
+  { value: "sports", label: "Sports" },
+  { value: "supercar", label: "Supercar" },
+  { value: "electric", label: "Electric" },
+  { value: "pickup", label: "Pickup" },
+  { value: "hypercar", label: "Hypercar" },
+];
+
 function ProductFilter({
   filterCondition,
   onFilterChange,
@@ -16,31 +34,8 @@ function ProductFilter({
 }: ProductFilterProps) {
   return (
     <div className="product-filter">
-      {/* Condition Filter */}
-      <select
-        value={filterCondition}
-        onChange={(e) => onFilterChange(e.target.value)}
-      >
-        <option value="all">All Conditions</option>
-        <option value="new">New</option>
-        <option value="used">Used</option>
-      </select>
-
-      {/* Category Filter */}
-      <select
-        value={filterCategory}
-        onChange={(e) => onCategoryChange(e.target.value)}
-      >
-        <option value="all">All Categories</option>
-        <option value="sedan">Sedan</option>
-        <option value="luxury">Luxury</option>
-        <option value="suv">SUV</option>
-        <option value="sports">Sports</option>
-        <option value="supercar">Supercar</option>
-        <option value="electric">Electric</option>
-        <option value="pickup">Pickup</option>
-        <option value="hypercar">Hypercar</option>
-      </select>
+      <Dropdown label="Filter by condition" value={filterCondition} options={conditionOptions} onChange={onFilterChange} />
+      <Dropdown label="Filter by category" value={filterCategory} options={categoryOptions} onChange={onCategoryChange} />
     </div>
   );
 }

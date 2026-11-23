@@ -482,3 +482,15 @@
   .details-buttons button::before,
   .back-to-products::before { display: none; }
 }
+
+@media (max-width: 850px) {
+  .details-container > * {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .specifications-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,32 +1,11 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useShop } from '../store/ShopContext';
-import { PROMO_CODE, PROMO_PERCENT } from '../data/shop';
 import PriceSummary from '../components/PriceSummary';
+import PromoCode from '../components/PromoCode';
 import './Shop.css';
 
 export default function Cart() {
-  const { cart, removeFromCart, increaseQty, decreaseQty, clearCart, discountPercent, setDiscountPercent } = useShop();
-
-  const [promoInput, setPromoInput] = useState('');
-
-  const [promoMessage, setPromoMessage] = useState(discountPercent > 0 ? 'Promo code applied!' : '');
-
-  function applyPromo() {
-    if (promoInput.trim().toUpperCase() === PROMO_CODE) {
-      setDiscountPercent(PROMO_PERCENT);
-      setPromoMessage('Promo code applied!');
-    } else {
-      setDiscountPercent(0);
-      setPromoMessage('Invalid promo code.');
-    }
-  }
-
-  function handleClear() {
-    clearCart();
-    setPromoInput('');
-    setPromoMessage('');
-  }
+  const { cart, removeFromCart, increaseQty, decreaseQty, clearCart } = useShop();
 
   return (
     <main className="shop-page">
@@ -86,28 +65,13 @@ export default function Cart() {
 
             <PriceSummary />
 
-            <div className="promo">
-              <input
-                type="text"
-                placeholder="Promo code"
-                value={promoInput}
-                onChange={(e) => setPromoInput(e.target.value)}
-                aria-label="Promo code"
-              />
-              <button className="btn-secondary" onClick={applyPromo}>Apply</button>
-            </div>
-
-            {promoMessage && (
-              <p className={discountPercent > 0 ? 'promo-message success' : 'promo-message error'}>
-                {promoMessage}
-              </p>
-            )}
+            <PromoCode />
 
             {cart.length > 0 && (
               <Link to="/checkout" className="btn-primary full">Go to Checkout →</Link>
             )}
 
-            <button className="clear-btn" onClick={handleClear} disabled={cart.length === 0}>
+            <button className="clear-btn" onClick={clearCart} disabled={cart.length === 0}>
               Clear Cart
             </button>
           </aside>

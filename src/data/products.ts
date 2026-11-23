@@ -19,7 +19,7 @@ import bugattimanualpistachiogreenImage from "../assets/images/bugatti-brouillar
 
 import bmwM4Image from "../assets/images/BMWM4G82black.jpg";
 
-import lamborghiniImage from "../assets/images/lamborghinimanualwhite.jpg";
+import lamborghiniImage from "../assets/images/lamborghiniImage.jpg";
 
 import ferrariImage from "../assets/images/ferrari-296-gtb-red.jpg";
 

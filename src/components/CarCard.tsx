@@ -10,8 +10,9 @@ interface CarCardProps {
 function CarCard({ car }: CarCardProps) {
 
     const navigate = useNavigate();
-    const { addToCart, toggleWishlist, isInWishlist } = useShop();
+    const { cart, addToCart, toggleWishlist, isInWishlist } = useShop();
     const isWishlisted = isInWishlist(car.id);
+    const cartItem = cart.find((item) => item.car.id === car.id);
 
     const [justAdded, setJustAdded] = useState(false);
 
@@ -25,6 +26,10 @@ function CarCard({ car }: CarCardProps) {
 return (
   <div className="car-card">
     <img src={car.image} alt={car.name} className="car-image" />
+
+    {cartItem && (
+      <span className="in-cart-badge">✓ In Cart ({cartItem.quantity})</span>
+    )}
 
     <div className="car-info">
       <h2 className="car-name">{car.name}</h2>

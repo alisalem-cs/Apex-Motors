@@ -375,3 +375,21 @@
   40% { transform: scale(1.08); }
   100% { transform: scale(1); }
 }
+
+.in-cart-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 4;
+  padding: 7px 16px;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: #1a9e4b;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  animation: cart-pop 0.4s ease;
+}

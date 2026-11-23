@@ -1,30 +1,25 @@
+import Dropdown from "./Dropdown";
 import "./ProductSort.css";
+
 interface ProductSortProps {
   sortOrder: string;
   onSortChange: (value: string) => void;
 }
 
+const sortOptions = [
+  { value: "default", label: "🔄 Default" },
+  { value: "price-asc", label: "🔻 Price: Low to High" },
+  { value: "price-desc", label: "🔺 Price: High to Low" },
+  { value: "year-asc", label: "📅 Year: Oldest to Newest" },
+  { value: "year-desc", label: "📅 Year: Newest to Oldest" },
+];
+
 function ProductSort({ sortOrder, onSortChange }: ProductSortProps) {
   return (
-<select className="product-sort" value={sortOrder} onChange={(e) => onSortChange(e.target.value)} >
-<option value="default">🔄 Default</option>    
-<option value="price-asc">🔻 Price: Low to High</option>
-<option value="price-desc">🔺 Price: High to Low</option>
-<option value="year-asc">📅 Year: Oldest to Newest</option>
-<option value="year-desc">📅 Year: Newest to Oldest</option>
+    <div className="product-sort">
+      <Dropdown label="Sort cars" value={sortOrder} options={sortOptions} onChange={onSortChange} />
+    </div>
+  );
+}
 
-
-</select> 
-
-
-
-
-
-
-
-)
-
-        }
-
-
-export default ProductSort;        
+export default ProductSort;
