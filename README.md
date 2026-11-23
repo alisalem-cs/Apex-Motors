@@ -1,75 +1,96 @@
-# React + TypeScript + Vite
+# 🏎️ Apex Motors
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 🚗 A modern car shop e-commerce web app built with **React** + **TypeScript**.
 
-Currently, two official plugins are available:
+Apex Motors lets users browse cars, save their favorites, add them to a cart, and go through a smooth checkout, all in a fast, responsive single-page app.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🏠 **Home Page**: Eye-catching landing page that showcases featured cars
+- 🚘 **Car Catalog**: Browse all available cars with images, prices, and key specs
+- 🔍 **Car Details**: View full details for each car
+- 🛒 **Shopping Cart**: Add and remove cars, change quantities, and see the total update live
+- ❤️ **Wishlist**: Save cars you love and move them to the cart with one click
+- 💳 **Checkout**: Simple checkout form with an order summary
+- 🧭 **Navigation**: Navbar and footer shared across all pages
+- 📱 **Responsive Design**: Looks great on desktop, tablet, and mobile
+- 💾 **State Management**: Dedicated stores for the cart (`cartStore`) and wishlist (`wishlistStore`)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| Tool | Purpose |
+|------|---------|
+| ⚛️ React | UI library |
+| 🟦 TypeScript | Type safety |
+| ⚡ Vite | Fast dev server & build tool |
+| 🎨 CSS | Styling |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📁 Project Structure
 
 ```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+src/
+├── 📄 main.tsx          # App entry point
+├── 📄 App.tsx           # Routes & layout
+├── 📂 components/       # Navbar, Footer, reusable UI
+├── 📂 pages/            # Home, Catalog, Cart, Wishlist, Checkout
+├── 📂 store/            # cartStore, wishlistStore
+├── 📂 types/            # Shared TypeScript types
+└── 🎨 index.css         # Global styles
 ```
+
+---
+
+## 🚀 Getting Started
+
+1️⃣ **Clone the repo**
+```bash
+git clone https://github.com/your-username/apex-motors.git
+cd apex-motors
+```
+
+2️⃣ **Install dependencies**
+```bash
+npm install
+```
+
+3️⃣ **Run the dev server**
+```bash
+npm run dev
+```
+
+4️⃣ Open 👉 `http://localhost:5173` in your browser
+
+---
+
+## 👥 Team
+
+| Developer | Responsibilities |
+|-----------|------------------|
+| 👨‍💻 Developer A | _Add responsibilities_ |
+| 👨‍💻 Developer B | _Add responsibilities_ |
+| 👨‍💻 **Mohannad Kaddoura** (Developer C) | 🛒 Cart, ❤️ Wishlist, 💳 Checkout |
+
+---
+
+## 🔮 Future Improvements
+
+- 🔐 User authentication
+- 🔎 Search & filters (brand, price, year)
+- 🌙 Dark mode
+- 💰 Real payment integration
+
+---
+
+## 📜 License
+
+This project was built for educational purposes as part of a course. 🎓
+
+---
+
+<p align="center">Made with ❤️ and ☕ by the Apex Motors team 🏁</p>
