@@ -74,7 +74,7 @@ npm run dev
 |-----------|------------------|
 | 👨‍💻 Ali Salem | _Add responsibilities_ |
 | 👨‍💻 Mohammad Al Hanafi | _Add responsibilities_ |
-| 👨‍💻 **Mohannad Kaddoura** (Developer C) | 🛒 Cart, ❤️ Wishlist, 💳 Checkout |
+| 👨‍💻 **Mohannad Kaddoura** | 🛒 Cart, ❤️ Wishlist, 💳 Checkout |
 
 ---
 
