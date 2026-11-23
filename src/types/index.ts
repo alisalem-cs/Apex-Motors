@@ -1,20 +1,21 @@
-export interface Car {
-  id: string;
+export interface CarProduct {
+  id: number;
+  name: string;
   brand: string;
   model: string;
   year: number;
   price: number;
   image: string;
-  description: string;
-  category: string;
   mileage: number;
   fuelType: string;
-  transmission: string;
-  horsepower: number;
+  transmission: string; // e.g., "Automatic", "Manual"
+  condition: string;
+  color: string;
+  category: string;
 }
 
 export interface CartItem {
-  car: Car;
+  car: CarProduct;
   quantity: number;
 }
 

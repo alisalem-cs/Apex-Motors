@@ -1,33 +1,9 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import type { Car, CartItem } from '../types';
+import type { CarProduct, CartItem } from '../types';
 import { DELIVERY_FEE } from '../data/products';
-
-interface ShopContextValue {
-  cart: CartItem[];
-  wishlist: Car[];
-  discountPercent: number;
-
-  addToCart: (car: Car) => void;
-  removeFromCart: (id: string) => void;
-  increaseQty: (id: string) => void;
-  decreaseQty: (id: string) => void;
-  clearCart: () => void;
-
-  toggleWishlist: (car: Car) => void;
-  removeFromWishlist: (id: string) => void;
-  clearWishlist: () => void;
-  isInWishlist: (id: string) => boolean;
-
-  setDiscountPercent: (percent: number) => void;
-
-  subtotal: number;
-  discount: number;
-  delivery: number;
-  total: number;
-}
-
-const ShopContext = createContext<ShopContextValue | null>(null);
+import { ShopContext } from './ShopContext';
+import type { ShopContextValue } from './ShopContext';
 
 function loadFromStorage<T>(key: string): T[] {
   try {
@@ -40,7 +16,7 @@ function loadFromStorage<T>(key: string): T[] {
 
 export function ShopProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>(() => loadFromStorage<CartItem>('cart'));
-  const [wishlist, setWishlist] = useState<Car[]>(() => loadFromStorage<Car>('wishlist'));
+  const [wishlist, setWishlist] = useState<CarProduct[]>(() => loadFromStorage<CarProduct>('wishlist'));
 
   const [discountPercent, setDiscountPercent] = useState(0);
 
@@ -52,7 +28,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
   }, [wishlist]);
 
-  function addToCart(car: Car) {
+  function addToCart(car: CarProduct) {
     const alreadyInCart = cart.find((item) => item.car.id === car.id);
 
     if (alreadyInCart) {
@@ -62,11 +38,11 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  function removeFromCart(id: string) {
+  function removeFromCart(id: number) {
     setCart(cart.filter((item) => item.car.id !== id));
   }
 
-  function increaseQty(id: string) {
+  function increaseQty(id: number) {
     setCart(
       cart.map((item) =>
         item.car.id === id ? { ...item, quantity: item.quantity + 1 } : item
@@ -74,7 +50,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     );
   }
 
-  function decreaseQty(id: string) {
+  function decreaseQty(id: number) {
     const item = cart.find((item) => item.car.id === id);
 
     if (item && item.quantity === 1) {
@@ -94,15 +70,15 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     setDiscountPercent(0);
   }
 
-  function isInWishlist(id: string) {
+  function isInWishlist(id: number) {
     return wishlist.some((car) => car.id === id);
   }
 
-  function removeFromWishlist(id: string) {
+  function removeFromWishlist(id: number) {
     setWishlist(wishlist.filter((car) => car.id !== id));
   }
 
-  function toggleWishlist(car: Car) {
+  function toggleWishlist(car: CarProduct) {
     if (isInWishlist(car.id)) {
       removeFromWishlist(car.id);
     } else {
@@ -144,12 +120,4 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   };
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
-}
-
-export function useShop() {
-  const shop = useContext(ShopContext);
-  if (!shop) {
-    throw new Error('useShop must be used inside <ShopProvider>');
-  }
-  return shop;
 }

@@ -1,63 +1,77 @@
 import { Link } from 'react-router-dom';
 import { useShop } from '../store/ShopContext';
-import type { Car } from '../types';
-import './Wishlist.css';
+import type { CarProduct } from '../types';
+import '../components/CarCard.css';
+import './Shop.css';
 
 export default function Wishlist() {
   const { wishlist, addToCart, removeFromWishlist, clearWishlist } = useShop();
 
-  function moveToCart(car: Car) {
+  function moveToCart(car: CarProduct) {
     addToCart(car);
     removeFromWishlist(car.id);
   }
 
   return (
-    <div className="wishlist">
-      <p className="wishlist-breadcrumb">Home &gt; <span>Wishlist</span></p>
+    <main className="shop-page">
+      <section className="page-header">
+        <h1>Your Wishlist</h1>
+        <p>The cars you saved for later. Move them to your cart when you're ready.</p>
+      </section>
 
-      <div className="wishlist-header">
-        <h1 className="wishlist-title">Your Wishlist</h1>
-        <Link to="/cart" className="wishlist-cart-link">🛒 My Cart</Link>
-      </div>
-
-      {wishlist.length > 0 && (
-        <div className="wishlist-toolbar">
-          <span className="wishlist-count">
-            {wishlist.length} {wishlist.length === 1 ? 'car' : 'cars'} saved
-          </span>
-          <button className="wishlist-clear-btn" onClick={clearWishlist}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M9 3h6l1 2h4v2H4V5h4l1-2zm-3 6h12l-1 12H7L6 9z" />
-            </svg>
-            Clear Wishlist
-          </button>
+      <div className="shop-container">
+        <div className="shop-toolbar">
+          {wishlist.length > 0 && (
+            <span className="shop-count">
+              {wishlist.length} {wishlist.length === 1 ? 'car' : 'cars'} saved
+            </span>
+          )}
+          <Link to="/cart" className="section-link">My Cart</Link>
         </div>
-      )}
 
-      {wishlist.length === 0 && (
-        <div className="wishlist-empty">
-          <p>Your wishlist is empty.</p>
-          <Link to="/cart" className="wishlist-browse-btn">Browse Cars</Link>
-        </div>
-      )}
+        {wishlist.length === 0 && (
+          <div className="shop-panel shop-empty">
+            <p>Your wishlist is empty.</p>
+            <Link to="/products" className="btn-primary">Browse Cars</Link>
+          </div>
+        )}
 
-      <div className="wishlist-grid">
-        {wishlist.map((car) => (
-          <div className="wishlist-card" key={car.id}>
-            <img src={car.image} alt={car.model} />
-            <div className="wishlist-card-body">
-              <h3>{car.brand} {car.model}</h3>
-              <p>Year: {car.year}</p>
-              <span className="wishlist-price">${car.price.toLocaleString()}</span>
+        <div className="wishlist-grid">
+          {wishlist.map((car) => (
+            <div className="car-card" key={car.id}>
+              <img src={car.image} alt={car.name} className="car-image" />
+              <div className="car-info">
+                <h2 className="car-name">{car.name}</h2>
+                <p className="car-price">${car.price.toLocaleString('en-US')}</p>
 
-              <div className="wishlist-actions">
-                <button className="wishlist-cart-btn" onClick={() => moveToCart(car)}>Move to Cart</button>
-                <button className="wishlist-remove-btn" onClick={() => removeFromWishlist(car.id)}>Remove</button>
+                <div className="car-details">
+                  <p>Year: {car.year}</p>
+                  <p>Category: {car.category}</p>
+                  <p>Condition: {car.condition}</p>
+                  <p>Color: {car.color}</p>
+                </div>
+
+                <div className="car-buttons">
+                  <button className="see-details-button" onClick={() => moveToCart(car)}>Move to Cart</button>
+                  <button
+                    className="add-to-cart-button"
+                    onClick={() => removeFromWishlist(car.id)}
+                    aria-label={'Remove ' + car.name + ' from wishlist'}
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
             </div>
+          ))}
+        </div>
+
+        {wishlist.length > 0 && (
+          <div className="shop-bottom">
+            <button className="clear-btn" onClick={clearWishlist}>Clear Wishlist</button>
           </div>
-        ))}
+        )}
       </div>
-    </div>
+    </main>
   );
 }

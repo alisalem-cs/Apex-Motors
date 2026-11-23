@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useShop } from '../store/ShopContext';
 import PriceSummary from '../components/PriceSummary';
 import type { Order } from '../types';
-import './Checkout.css';
+import './Shop.css';
 
 const COUNTRY_CODES = [
   { code: '+961', country: 'Lebanon', example: '70123456' },
@@ -143,125 +143,138 @@ export default function Checkout() {
     const firstName = order.fullName.split(' ')[0];
 
     return (
-      <div className="checkout">
-        <div className="checkout-success">
-          <div className="success-icon">✓</div>
-          <h1>Order Confirmed</h1>
-          <p className="success-intro">
-            Thank you, {firstName}. Your order has been placed successfully.
-            A confirmation has been sent to <strong>{order.email}</strong>.
-          </p>
+      <main className="shop-page">
+        <div className="shop-container">
+          <div className="shop-panel success-panel">
+            <div className="success-icon">✓</div>
+            <h1>Order Confirmed</h1>
+            <p className="success-intro">
+              Thank you, {firstName}. Your order has been placed successfully.
+              A confirmation has been sent to <strong>{order.email}</strong>.
+            </p>
 
-          <div className="success-details">
-            <div className="summary-row">
-              <span>Order Number</span>
-              <strong>{order.id}</strong>
+            <div className="success-details">
+              <div className="summary-row">
+                <span>Order Number</span>
+                <strong>{order.id}</strong>
+              </div>
+              <div className="summary-row">
+                <span>Order Date</span>
+                <strong>{order.date}</strong>
+              </div>
+              <div className="summary-row">
+                <span>Delivery Address</span>
+                <strong>{order.address}</strong>
+              </div>
+              <div className="summary-row summary-total">
+                <span>Total Paid</span>
+                <strong>${order.total.toLocaleString()}</strong>
+              </div>
             </div>
-            <div className="summary-row">
-              <span>Order Date</span>
-              <strong>{order.date}</strong>
-            </div>
-            <div className="summary-row">
-              <span>Delivery Address</span>
-              <strong>{order.address}</strong>
-            </div>
-            <div className="summary-row summary-total">
-              <span>Total Paid</span>
-              <strong>${order.total.toLocaleString()}</strong>
-            </div>
+
+            <p className="success-note">
+              A member of our sales team will contact you at <strong>{order.phone}</strong> within
+              24 hours to confirm your order and arrange delivery. Please keep your order number for reference.
+            </p>
+
+            <Link to="/cart" className="btn-primary">Continue Shopping</Link>
           </div>
-
-          <p className="success-note">
-            A member of our sales team will contact you at <strong>{order.phone}</strong> within
-            24 hours to confirm your order and arrange delivery. Please keep your order number for reference.
-          </p>
-
-          <Link to="/cart" className="checkout-btn">Continue Shopping</Link>
         </div>
-      </div>
+      </main>
     );
   }
 
   if (cart.length === 0) {
     return (
-      <div className="checkout">
-        <h1 className="checkout-title">Checkout</h1>
-        <p className="checkout-empty">Your cart is empty.</p>
-        <Link to="/cart" className="checkout-btn checkout-btn-small">Back to Cart</Link>
-      </div>
+      <main className="shop-page">
+        <section className="page-header">
+          <h1>Checkout</h1>
+          <p>Your cart is empty. Add a car before checking out.</p>
+        </section>
+        <div className="shop-container">
+          <div className="shop-panel shop-empty">
+            <p>Your cart is empty.</p>
+            <Link to="/cart" className="btn-primary">Back to Cart</Link>
+          </div>
+        </div>
+      </main>
     );
   }
 
   return (
-    <div className="checkout">
-      <p className="checkout-breadcrumb">Home &gt; Cart &gt; <span>Checkout</span></p>
+    <main className="shop-page">
+      <section className="page-header">
+        <h1>Checkout</h1>
+        <p>Enter your delivery details to place your order.</p>
+      </section>
 
-      <div className="checkout-header">
-        <h1 className="checkout-title">Checkout</h1>
-        <Link to="/cart" className="checkout-back-btn">← Back to Cart</Link>
-      </div>
+      <div className="shop-container">
+        <div className="shop-toolbar">
+          <Link to="/cart" className="section-link">Back to Cart</Link>
+        </div>
 
-      <div className="checkout-layout">
-        <form className="checkout-form" onSubmit={handleSubmit} noValidate>
-          <h2>Shipping Details</h2>
-          {renderField('fullName', 'Full Name', 'John Smith')}
-          {renderField('email', 'Email', 'john@example.com')}
+        <div className="shop-layout">
+          <form className="shop-panel checkout-form" onSubmit={handleSubmit} noValidate>
+            <h2>Shipping Details</h2>
+            {renderField('fullName', 'Full Name', 'John Smith')}
+            {renderField('email', 'Email', 'john@example.com')}
 
-          <div className="checkout-field">
-            <label htmlFor="phone">Phone</label>
-            <div className="phone-row">
-              <select name="countryCode" aria-label="Country code" value={form.countryCode} onChange={handleChange}>
-                {COUNTRY_CODES.map((c) => (
-                  <option key={c.code} value={c.code}>
-                    {c.country} ({c.code})
-                  </option>
-                ))}
-              </select>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                inputMode="numeric"
-                value={form.phone}
-                onChange={handleChange}
-                placeholder={phonePlaceholder}
-                maxLength={12}
-                className={errors.phone ? 'input-error' : ''}
-              />
-            </div>
-            {errors.phone && <p className="checkout-error">{errors.phone}</p>}
-          </div>
-
-          {renderField('address', 'Address', 'Street, building, floor')}
-          {renderField('city', 'City', 'Beirut')}
-
-          <h2>Payment</h2>
-          {renderField('cardNumber', 'Card Number', '4242424242424242', 16)}
-          <div className="checkout-row">
-            {renderField('expiry', 'Expiry', 'MM/YY', 5)}
-            {renderField('cvv', 'CVV', '123', 3)}
-          </div>
-
-          <button type="submit" className="checkout-btn">Place Order</button>
-        </form>
-
-        <div className="checkout-summary">
-          <h2>Order Summary</h2>
-
-          {cart.map((item) => (
-            <div className="checkout-item" key={item.car.id}>
-              <img src={item.car.image} alt={item.car.model} />
-              <div className="checkout-item-info">
-                <p>{item.car.brand} {item.car.model}</p>
-                <span>Qty: {item.quantity}</span>
+            <div className="checkout-field">
+              <label htmlFor="phone">Phone</label>
+              <div className="phone-row">
+                <select name="countryCode" aria-label="Country code" value={form.countryCode} onChange={handleChange}>
+                  {COUNTRY_CODES.map((c) => (
+                    <option key={c.code} value={c.code}>
+                      {c.country} ({c.code})
+                    </option>
+                  ))}
+                </select>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  inputMode="numeric"
+                  value={form.phone}
+                  onChange={handleChange}
+                  placeholder={phonePlaceholder}
+                  maxLength={12}
+                  className={errors.phone ? 'input-error' : ''}
+                />
               </div>
-              <strong>${(item.car.price * item.quantity).toLocaleString()}</strong>
+              {errors.phone && <p className="checkout-error">{errors.phone}</p>}
             </div>
-          ))}
 
-          <PriceSummary />
+            {renderField('address', 'Address', 'Street, building, floor')}
+            {renderField('city', 'City', 'Beirut')}
+
+            <h2>Payment</h2>
+            {renderField('cardNumber', 'Card Number', '4242424242424242', 16)}
+            <div className="checkout-row">
+              {renderField('expiry', 'Expiry', 'MM/YY', 5)}
+              {renderField('cvv', 'CVV', '123', 3)}
+            </div>
+
+            <button type="submit" className="btn-primary full">Place Order</button>
+          </form>
+
+          <aside className="shop-panel summary-panel">
+            <h2>Order Summary</h2>
+
+            {cart.map((item) => (
+              <div className="checkout-item" key={item.car.id}>
+                <img src={item.car.image} alt={item.car.name} />
+                <div className="checkout-item-info">
+                  <p>{item.car.name}</p>
+                  <span>Qty: {item.quantity}</span>
+                </div>
+                <strong>${(item.car.price * item.quantity).toLocaleString()}</strong>
+              </div>
+            ))}
+
+            <PriceSummary />
+          </aside>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
