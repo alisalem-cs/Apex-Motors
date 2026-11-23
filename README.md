@@ -8,15 +8,18 @@ Apex Motors lets users browse cars, save their favorites, add them to a cart, an
 
 ## ✨ Features
 
-- 🏠 **Home Page**: Eye-catching landing page that showcases featured cars
-- 🚘 **Car Catalog**: Browse all available cars with images, prices, and key specs
-- 🔍 **Car Details**: View full details for each car
-- 🛒 **Shopping Cart**: Add and remove cars, change quantities, and see the total update live
-- ❤️ **Wishlist**: Save cars you love and move them to the cart with one click
-- 💳 **Checkout**: Simple checkout form with an order summary
-- 🧭 **Navigation**: Navbar and footer shared across all pages
-- 📱 **Responsive Design**: Looks great on desktop, tablet, and mobile
-- 💾 State Management: Cart, wishlist and prices are shared across the app using React Context (ShopContext + ShopProvider), and saved in localStorage so they survive a page refresh
+🏠 Home Page: Eye-catching landing page that showcases featured cars
+🚘 Car Catalog: Browse all available cars with images, prices, and key specs
+🔍 Car Details: View full details for each car
+🛒 Shopping Cart: Add and remove cars, change quantities, and see the total update live
+❤️ Wishlist: Save cars you love and move them to the cart with one click
+🏷️ Promo Codes: Apply a promo code (try APEX20) for 20% off, with success/error messages
+🧾 Price Summary: Subtotal, discount, delivery fee, and total, updated live
+💳 Checkout: Shipping & payment form validated with Zod (clear error under each field), auto-formatted expiry date, and a phone country-code picker
+🎉 Order Confirmation: Confirmation page with order number, date, delivery address, and total paid
+🧭 Navigation: Navbar and footer shared across all pages
+📱 Responsive Design: Looks great on desktop, tablet, and mobile
+💾 State Management: Cart, wishlist and prices are shared across the app using React Context (ShopContext + ShopProvider), and saved in localStorage so they survive a page refresh
 
 ---
 
@@ -74,7 +77,7 @@ npm run dev
 |-----------|------------------|
 | 👨‍💻 Ali Salem | 🚗 Homepage & Shared Layout · 🧭 Routing & Navigation · 🔗 Team Integration · 🤝 Git/GitHub Collaboration · 🧪 Application Testing |
 | 👨‍💻 Mohammad Al Hanafi | 🔍 Product Search · 🏷️ Category & Condition Filters · ↕️ Product Sorting · 🚘 Car Cards · 📋 Product Details |
-| 👨‍💻 **Mohannad Kaddoura** | 🛒 Cart, ❤️ Wishlist, 💳 Checkout |
+| 👨‍💻 **Mohannad Kaddoura** 🛒 Cart page (quantity +/−, remove, clear cart) · ❤️ Wishlist page (move to cart, remove, clear) · 💳 Checkout form with ✅ Zod validation (auto-formatted card expiry, numbers-only phone/card/CVV) · 🌍 Phone country-code picker · 🎉 Order confirmation page (order number, date, address, total paid) · 🏷️ Promo code system (APEX20 = 20% off) · 🧾 Price summary (subtotal, discount, delivery fee, total) · 🧠 Shared state with React Context (ShopContext + ShopProvider) · 💾 Cart & wishlist saved in localStorage 
 
 ---
 
