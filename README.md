@@ -72,8 +72,8 @@ npm run dev
 
 | Developer | Responsibilities |
 |-----------|------------------|
-| 👨‍💻 Developer A | _Add responsibilities_ |
-| 👨‍💻 Developer B | _Add responsibilities_ |
+| 👨‍💻 Ali Salem | _Add responsibilities_ |
+| 👨‍💻 Mohammad Al Hanafi | _Add responsibilities_ |
 | 👨‍💻 **Mohannad Kaddoura** (Developer C) | 🛒 Cart, ❤️ Wishlist, 💳 Checkout |
 
 ---
