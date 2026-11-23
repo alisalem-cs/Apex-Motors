@@ -21,6 +21,22 @@ import bmwM4Image from "../assets/images/BMWM4G82black.jpg";
 
 import lamborghiniImage from "../assets/images/lamborghinimanualwhite.jpg";
 
+import ferrariImage from "../assets/images/ferrari-296-gtb-red.jpg";
+
+import audiImage from "../assets/images/audi-r8-v10-plus-blue.jpg";
+
+import teslaImage from "../assets/images/tesla-model-s-plaid-darkblue.jpg";
+
+import taycanImage from "../assets/images/porsche-taycan-turbo-s-grey.jpg";
+
+import landCruiserImage from "../assets/images/toyota-land-cruiser-gr-sport-black.jpg";
+
+import sClassImage from "../assets/images/mercedes-s580e-silver.jpg";
+
+import rivianImage from "../assets/images/rivian-r1t-darkgrey.jpg";
+
+import hondaImage from "../assets/images/honda-accord-white.jpg";
+
 import type { CarProduct } from "../types";
 
 
@@ -229,7 +245,7 @@ export const products: CarProduct[] = [
     model: "296 GTB",
     year: 2024,
     price: 330000,
-    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Ferrari_296_GTB_Auto_Zuerich_2024_DSC_6405.jpg/960px-Ferrari_296_GTB_Auto_Zuerich_2024_DSC_6405.jpg",
+    image: ferrariImage,
     mileage: 1200,
     fuelType: "Hybrid",
     transmission: "Automatic",
@@ -245,7 +261,7 @@ export const products: CarProduct[] = [
     model: "R8 V10 Plus",
     year: 2016,
     price: 145000,
-    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/2016_Audi_R8_Plus_Quattro_V10_S-A_5.2_Front.jpg/960px-2016_Audi_R8_Plus_Quattro_V10_S-A_5.2_Front.jpg",
+    image: audiImage,
     mileage: 32000,
     fuelType: "Gasoline",
     transmission: "Automatic",
@@ -261,7 +277,7 @@ export const products: CarProduct[] = [
     model: "Model S Plaid",
     year: 2024,
     price: 89990,
-    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Tesla_Model_S_Plaid_Autofr%C3%BChling_Ulm_IMG_9321.jpg/960px-Tesla_Model_S_Plaid_Autofr%C3%BChling_Ulm_IMG_9321.jpg",
+    image: teslaImage,
     mileage: 5000,
     fuelType: "Electric",
     transmission: "Automatic",
@@ -277,7 +293,7 @@ export const products: CarProduct[] = [
     model: "Taycan Turbo S",
     year: 2025,
     price: 210000,
-    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/32/Porsche_Taycan_Turbo_S_IMG_3471.jpg/960px-Porsche_Taycan_Turbo_S_IMG_3471.jpg",
+    image: taycanImage,
     mileage: 0,
     fuelType: "Electric",
     transmission: "Automatic",
@@ -293,7 +309,7 @@ export const products: CarProduct[] = [
     model: "Land Cruiser GR Sport",
     year: 2025,
     price: 95000,
-    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Toyota_LAND_CRUISER_GR_SPORT_%283BA-VJA300W-GNUSZ%29_front.jpg/960px-Toyota_LAND_CRUISER_GR_SPORT_%283BA-VJA300W-GNUSZ%29_front.jpg",
+    image: landCruiserImage,
     mileage: 0,
     fuelType: "Diesel",
     transmission: "Automatic",
@@ -309,7 +325,7 @@ export const products: CarProduct[] = [
     model: "S 580 e",
     year: 2022,
     price: 118000,
-    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Mercedes-Benz_W223_580_e_IAA_2021_1X7A0258.jpg/960px-Mercedes-Benz_W223_580_e_IAA_2021_1X7A0258.jpg",
+    image: sClassImage,
     mileage: 14000,
     fuelType: "Hybrid",
     transmission: "Automatic",
@@ -325,7 +341,7 @@ export const products: CarProduct[] = [
     model: "R1T",
     year: 2023,
     price: 73000,
-    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Rivian_R1T_on_Sunset_Blvd_rear.jpg/960px-Rivian_R1T_on_Sunset_Blvd_rear.jpg",
+    image: rivianImage,
     mileage: 11000,
     fuelType: "Electric",
     transmission: "Automatic",
@@ -341,7 +357,7 @@ export const products: CarProduct[] = [
     model: "Accord",
     year: 2023,
     price: 32000,
-    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/2023_Honda_Accord.jpg/960px-2023_Honda_Accord.jpg",
+    image: hondaImage,
     mileage: 18000,
     fuelType: "Gasoline",
     transmission: "Automatic",
