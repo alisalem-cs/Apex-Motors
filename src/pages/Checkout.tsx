@@ -4,39 +4,27 @@ import { Link } from 'react-router-dom';
 import { useShop } from '../store/ShopContext';
 import PriceSummary from '../components/PriceSummary';
 import PromoCode from '../components/PromoCode';
+import CountryCodePicker from '../components/CountryCodePicker';
+import { COUNTRY_CODES } from '../data/countries';
+import { getCardType } from '../data/cards';
 import type { Order } from '../types';
 import './Shop.css';
-
-const COUNTRY_CODES = [
-  { code: '+961', country: 'Lebanon', example: '70123456' },
-  { code: '+971', country: 'UAE', example: '501234567' },
-  { code: '+966', country: 'Saudi Arabia', example: '512345678' },
-  { code: '+974', country: 'Qatar', example: '33123456' },
-  { code: '+965', country: 'Kuwait', example: '50012345' },
-  { code: '+962', country: 'Jordan', example: '791234567' },
-  { code: '+20', country: 'Egypt', example: '1001234567' },
-  { code: '+90', country: 'Turkey', example: '5321234567' },
-  { code: '+33', country: 'France', example: '612345678' },
-  { code: '+49', country: 'Germany', example: '15123456789' },
-  { code: '+44', country: 'UK', example: '7400123456' },
-  { code: '+1', country: 'USA / Canada', example: '2015550123' },
-];
 
 const checkoutSchema = z.object({
   fullName: z.string().trim().min(3, 'Full name must be at least 3 characters'),
   email: z.string().trim().email('Enter a valid email'),
   countryCode: z.string().min(1, 'Select a country code'),
-  phone: z.string().regex(/^[0-9]{6,12}$/, 'Enter a valid phone number (6 to 12 digits, no country code)'),
+  phone: z.string().regex(/^[0-9]{6,12}$/, 'Enter your phone number without the country code'),
   address: z.string().trim().min(5, 'Address must be at least 5 characters'),
   city: z.string().trim().min(2, 'Enter your city'),
-  cardNumber: z.string().regex(/^[0-9]{16}$/, 'Card number must be 16 digits'),
+  cardNumber: z.string().regex(/^[0-9]{15,16}$/, 'Card number must be 15 or 16 digits'),
 
   expiry: z
     .string()
     .regex(/^(0[1-9]|1[0-2])\/[0-9]{2}$/, 'Use MM/YY format (e.g. 04/27)')
     .refine((value) => Number(value.slice(3)) >= 26, 'Expiry year must be 2026 or later'),
 
-  cvv: z.string().regex(/^[0-9]{3}$/, 'CVV must be 3 digits'),
+  cvv: z.string().regex(/^[0-9]{3,4}$/, 'CVV must be 3 or 4 digits'),
 });
 
 type CheckoutFields = z.infer<typeof checkoutSchema>;
@@ -69,11 +57,36 @@ function validate(form: CheckoutFields): FieldErrors {
     }
   }
 
+  const country = COUNTRY_CODES.find((c) => c.code === form.countryCode);
+
+  if (!errors.phone && country && !country.pattern.test(form.phone)) {
+    errors.phone = 'Enter a valid ' + country.country + ' mobile number, e.g. ' + country.example;
+  }
+
+  const cardType = getCardType(form.cardNumber);
+  const isAmex = cardType === 'American Express';
+
+  if (!errors.cardNumber) {
+    if (cardType === '') {
+      errors.cardNumber = 'We accept Visa, Mastercard, American Express and Discover';
+    } else if (isAmex && form.cardNumber.length !== 15) {
+      errors.cardNumber = 'American Express cards have 15 digits';
+    } else if (!isAmex && form.cardNumber.length !== 16) {
+      errors.cardNumber = cardType + ' cards have 16 digits';
+    }
+  }
+
+  const cvvLength = isAmex ? 4 : 3;
+
+  if (!errors.cvv && form.cvv.length !== cvvLength) {
+    errors.cvv = 'CVV must be ' + cvvLength + ' digits';
+  }
+
   return errors;
 }
 
 export default function Checkout() {
-  const { cart, total, clearCart } = useShop();
+  const { cart, total, clearCart, addOrder } = useShop();
 
   const [form, setForm] = useState<CheckoutFields>(emptyForm);
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -95,6 +108,10 @@ export default function Checkout() {
     setForm({ ...form, [name]: value });
   }
 
+  function handleCountryChange(code: string) {
+    setForm({ ...form, countryCode: code });
+  }
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
@@ -105,7 +122,7 @@ export default function Checkout() {
       return;
     }
 
-    setOrder({
+    const newOrder: Order = {
       id: 'AM-' + Math.floor(100000 + Math.random() * 900000),
       total: total,
       fullName: form.fullName,
@@ -113,10 +130,15 @@ export default function Checkout() {
       phone: form.countryCode + ' ' + form.phone,
       address: form.address + ', ' + form.city,
       date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-    });
+      paymentMethod: getCardType(form.cardNumber) + ' ending in ' + form.cardNumber.slice(-4),
+      items: cart,
+    };
 
+    setOrder(newOrder);
+    addOrder(newOrder);
     clearCart();
     setForm(emptyForm);
+    window.scrollTo(0, 0);
   }
 
   function renderField(name: keyof CheckoutFields, label: string, placeholder: string, maxLength?: number) {
@@ -139,6 +161,10 @@ export default function Checkout() {
 
   const selectedCountry = COUNTRY_CODES.find((c) => c.code === form.countryCode);
   const phonePlaceholder = selectedCountry ? selectedCountry.example : 'Phone number';
+  const phoneMaxLength = selectedCountry ? selectedCountry.maxDigits : 12;
+
+  const cardType = getCardType(form.cardNumber);
+  const isAmex = cardType === 'American Express';
 
   if (order) {
     const firstName = order.fullName.split(' ')[0];
@@ -167,6 +193,10 @@ export default function Checkout() {
                 <span>Delivery Address</span>
                 <strong>{order.address}</strong>
               </div>
+              <div className="summary-row">
+                <span>Paid With</span>
+                <strong>{order.paymentMethod}</strong>
+              </div>
               <div className="summary-row summary-total">
                 <span>Total Paid</span>
                 <strong>${order.total.toLocaleString()}</strong>
@@ -178,7 +208,10 @@ export default function Checkout() {
               24 hours to confirm your order and arrange delivery. Please keep your order number for reference.
             </p>
 
-            <Link to="/cart" className="btn-primary">Continue Shopping</Link>
+            <div className="success-actions">
+              <Link to="/history" className="btn-primary">View Order History</Link>
+              <Link to="/products" className="btn-secondary">Continue Shopping</Link>
+            </div>
           </div>
         </div>
       </main>
@@ -223,13 +256,7 @@ export default function Checkout() {
             <div className="checkout-field">
               <label htmlFor="phone">Phone</label>
               <div className="phone-row">
-                <select name="countryCode" aria-label="Country code" value={form.countryCode} onChange={handleChange}>
-                  {COUNTRY_CODES.map((c) => (
-                    <option key={c.code} value={c.code}>
-                      {c.country} ({c.code})
-                    </option>
-                  ))}
-                </select>
+                <CountryCodePicker value={form.countryCode} onChange={handleCountryChange} />
                 <input
                   id="phone"
                   name="phone"
@@ -238,7 +265,7 @@ export default function Checkout() {
                   value={form.phone}
                   onChange={handleChange}
                   placeholder={phonePlaceholder}
-                  maxLength={12}
+                  maxLength={phoneMaxLength}
                   className={errors.phone ? 'input-error' : ''}
                 />
               </div>
@@ -249,10 +276,27 @@ export default function Checkout() {
             {renderField('city', 'City', 'Beirut')}
 
             <h2>Payment</h2>
-            {renderField('cardNumber', 'Card Number', '4242424242424242', 16)}
+            <div className="checkout-field">
+              <label htmlFor="cardNumber">Card Number</label>
+              <div className="card-input">
+                <input
+                  id="cardNumber"
+                  name="cardNumber"
+                  inputMode="numeric"
+                  value={form.cardNumber}
+                  onChange={handleChange}
+                  placeholder="4242424242424242"
+                  maxLength={16}
+                  className={errors.cardNumber ? 'input-error' : ''}
+                />
+                {cardType !== '' && <span className={'card-badge ' + cardType.replace(' ', '-').toLowerCase()}>{cardType}</span>}
+                {cardType === '' && form.cardNumber.length > 0 && <span className="card-badge unknown">Unknown card</span>}
+              </div>
+              {errors.cardNumber && <p className="checkout-error">{errors.cardNumber}</p>}
+            </div>
             <div className="checkout-row">
               {renderField('expiry', 'Expiry', 'MM/YY', 5)}
-              {renderField('cvv', 'CVV', '123', 3)}
+              {renderField('cvv', 'CVV', isAmex ? '1234' : '123', isAmex ? 4 : 3)}
             </div>
 
             <button type="submit" className="btn-primary full">Place Order</button>

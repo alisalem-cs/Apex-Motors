@@ -49,17 +49,75 @@ body {
   text-align: center;
   padding: 40px 20px;
 
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.35),
-      rgba(0, 0, 0, 0.75)
-    ),
-    url("../assets/images/apex-hero.jpg");
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+/* Moving background photos */
+
+.hero-slides {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-slides::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.8)),
+    radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.55));
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: heroSlide 30s linear infinite;
+}
+
+.products-hero h1,
+.products-hero p {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+/* 5 photos x 6 seconds = 30 seconds for one full loop */
+@keyframes heroSlide {
+  0% {
+    opacity: 0;
+    transform: scale(1.05) translateX(0);
+  }
+  5% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0;
+    transform: scale(1.2) translateX(-3%);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.2) translateX(-3%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide {
+    animation: none;
+  }
+
+  .hero-slide:first-child {
+    opacity: 1;
+  }
 }
 
 /* Hero Title */
@@ -78,7 +136,8 @@ body {
 /* Hero Subtitle */
 
 .products-hero p {
-  color: #c82b2b;
+  color: #ff3a45;
+  font-weight: 600;
   font-size: 18px;
   letter-spacing: 2px;
   margin: 10px 0;
@@ -108,7 +167,7 @@ body {
 
 /* Optional hover effect */
 .products-hero p:hover {
-  color: #a01f1f;
+  color: #ff6b73;
   letter-spacing: 3px;
 }
 

@@ -6,7 +6,14 @@ import CarCard from "../components/CarCard";
 import ProductSearch from "../components/ProductSearch";
 import ProductSort from "../components/ProductSort";
 import ProductFilter from "../components/ProductFilter";
+import heroImage from "../assets/images/apex-hero.jpg";
+import lamborghiniImage from "../assets/images/lamborghiniImage.jpg";
+import mclarenImage from "../assets/images/mclaren-750S-Coup-exterior-oem-01.webp";
+import bugattiImage from "../assets/images/bugatti-brouillard-automaticPistachioGreen.webp";
+import jeskoImage from "../assets/images/koenigsegg-jesko.jpg";
 import "./products.css";
+
+const heroImages = [heroImage, lamborghiniImage, mclarenImage, bugattiImage, jeskoImage];
 
 function CarProducts() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -66,6 +73,18 @@ function CarProducts() {
   return (
     <div className="products-page">
       <section className="products-hero">
+        <div className="hero-slides">
+          {heroImages.map((image, index) => (
+            <img
+              key={image}
+              src={image}
+              alt=""
+              className="hero-slide"
+              style={{ animationDelay: index * 6 + "s" }}
+            />
+          ))}
+        </div>
+
         <h1 className="Title-H1">Explore Our Cars</h1>
         <p>Discover excellence. Drive your dream.</p>
       </section>

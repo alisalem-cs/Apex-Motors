@@ -27,4 +27,6 @@ export interface Order {
   phone: string;
   address: string;
   date: string;
+  paymentMethod: string;
+  items: CartItem[];
 }
