@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import type { CarProduct, CartItem } from '../types';
+import type { CarProduct, CartItem, Order } from '../types';
 import { DELIVERY_FEE } from '../data/shop';
 import { ShopContext } from './ShopContext';
 import type { ShopContextValue } from './ShopContext';
 
+
+//T is a generic TypeScript type. It allows the same function to work with different types of data.
 function loadFromStorage<T>(key: string): T[] {
   try {
     const saved = localStorage.getItem(key);
@@ -17,9 +19,10 @@ function loadFromStorage<T>(key: string): T[] {
 export function ShopProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>(() => loadFromStorage<CartItem>('cart'));
   const [wishlist, setWishlist] = useState<CarProduct[]>(() => loadFromStorage<CarProduct>('wishlist'));
+  const [orders, setOrders] = useState<Order[]>(() => loadFromStorage<Order>('orders'));
 
   const [discountPercent, setDiscountPercent] = useState(0);
-
+// convert the JSON string into a JavaScript value
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
@@ -27,6 +30,10 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
   }, [wishlist]);
+
+  useEffect(() => {
+    localStorage.setItem('orders', JSON.stringify(orders));
+  }, [orders]);
 
   function addToCart(car: CarProduct) {
     const alreadyInCart = cart.find((item) => item.car.id === car.id);
@@ -90,6 +97,14 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     setWishlist([]);
   }
 
+  function addOrder(order: Order) {
+    setOrders([order, ...orders]);
+  }
+
+  function clearOrders() {
+    setOrders([]);
+  }
+
   let subtotal = 0;
   for (const item of cart) {
     subtotal = subtotal + item.car.price * item.quantity;
@@ -102,6 +117,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const value: ShopContextValue = {
     cart,
     wishlist,
+    orders,
     discountPercent,
     addToCart,
     removeFromCart,
@@ -113,6 +129,8 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     clearWishlist,
     isInWishlist,
     setDiscountPercent,
+    addOrder,
+    clearOrders,
     subtotal,
     discount,
     delivery,

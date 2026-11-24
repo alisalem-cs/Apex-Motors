@@ -418,6 +418,108 @@
   font-size: 14px;
 }
 
+/* ---------- Card type badge ---------- */
+.card-input {
+  position: relative;
+}
+
+.card-input input {
+  padding-right: 150px;
+}
+
+.card-badge {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  padding: 5px 10px;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  pointer-events: none;
+  animation: badge-in 0.25s ease;
+}
+
+.card-badge.visa {
+  background: #1a1f71;
+  font-style: italic;
+}
+
+.card-badge.mastercard {
+  background: linear-gradient(90deg, #eb001b, #f79e1b);
+}
+
+.card-badge.american-express {
+  background: #2e77bc;
+}
+
+.card-badge.discover {
+  background: #ff6000;
+}
+
+.card-badge.unknown {
+  background: #3a3a44;
+  color: var(--text-muted);
+}
+
+@keyframes badge-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.8);
+  }
+}
+
+.success-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+/* ---------- Order history ---------- */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.history-order h2 {
+  margin-bottom: 4px;
+  font-size: 30px;
+}
+
+.history-date {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.history-status {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  color: #3ddc84;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(61, 220, 132, 0.1);
+  border: 1px solid rgba(61, 220, 132, 0.4);
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1000px) {
   .shop-layout {
@@ -452,5 +554,14 @@
   .checkout-row {
     grid-template-columns: 1fr;
     gap: 0;
+  }
+
+  .history-header {
+    flex-wrap: wrap;
+  }
+
+  .history-order h2 {
+    font-size: 26px;
+    white-space: nowrap;
   }
 }

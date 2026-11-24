@@ -11,6 +11,7 @@ export default function Footer() {
       <div className="footer-links">
         <Link to="/">Home</Link>
         <Link to="/products">Explore Cars</Link>
+        <Link to="/about">About Us</Link>
         <Link to="/wishlist">Wishlist</Link>
         <Link to="/cart">Cart</Link>
       </div>
@@ -20,4 +21,4 @@ export default function Footer() {
       </p>
     </footer>
   );
-}
+}

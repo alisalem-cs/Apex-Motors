@@ -1,9 +1,10 @@
 import { createContext, useContext } from 'react';
-import type { CarProduct, CartItem } from '../types';
+import type { CarProduct, CartItem, Order } from '../types';
 
 export interface ShopContextValue {
   cart: CartItem[];
   wishlist: CarProduct[];
+  orders: Order[];
   discountPercent: number;
 
   addToCart: (car: CarProduct) => void;
@@ -19,6 +20,9 @@ export interface ShopContextValue {
 
   setDiscountPercent: (percent: number) => void;
 
+  addOrder: (order: Order) => void;
+  clearOrders: () => void;
+
   subtotal: number;
   discount: number;
   delivery: number;
@@ -28,6 +32,7 @@ export interface ShopContextValue {
 export const ShopContext = createContext<ShopContextValue | null>(null);
 
 export function useShop() {
+  //React retrieves the entire object we previously passed through value
   const shop = useContext(ShopContext);
   if (!shop) {
     throw new Error('useShop must be used inside <ShopProvider>');
